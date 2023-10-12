@@ -36,10 +36,11 @@ public class DemoInterface {
         std_list.forEach(System.out::println);
         System.out.println("After sort");
         
-//        System.out.println("\nSort with comparable:");
-//        Collections.sort(std_list);
+        System.out.println("\nSort with comparable:");
+        Collections.sort(std_list);
+        std_list.forEach(System.out::println);
 
-        System.out.println("\nSort with comparator:");
+        System.out.println("\nSort with comparator (lambda expression):");
         std_list.sort(new Comparator<Student>() {
             @Override
             public int compare(Student o1, Student o2) {
@@ -55,7 +56,7 @@ public class DemoInterface {
         };
         ArrayList<Student> std_matched = search(search_name);
         
-        System.out.println("\nSearch 'An': ");
+        System.out.println("\nSearch 'An' (with Predicate<> and lambda expression): ");
         std_matched.forEach(System.out::println);
     }
     

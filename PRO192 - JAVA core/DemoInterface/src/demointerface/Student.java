@@ -4,9 +4,6 @@
  */
 package demointerface;
 
-import java.util.function.Predicate;
-import javax.lang.model.element.Element;
-
 /**
  *
  * @author hoang
@@ -39,14 +36,4 @@ public class Student extends Person implements Comparable<Student>{
     public String toString() {
         return "Student{" + super.toString()+", gpa=" + gpa + '}';
     } 
-    
-//    public static ArrayList<Student> search(Predicate<Student> p) {
-//        ArrayList<Student> rs = new ArrayList<>();
-//        for (Student s : stdList) {
-//            if (p.test(s)) {
-//                rs.add(s);
-//            }
-//        }
-//        return rs;
-//    }
 }
