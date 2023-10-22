@@ -1,0 +1,4 @@
+001;Nguyen Van A;9.5
+002;Nguyen Van B;9.0
+003;Nguyen Van C;7.0
+004;Nguyen Van D;8.5
