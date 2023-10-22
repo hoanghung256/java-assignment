@@ -17,7 +17,7 @@ public class Student extends Person{
     }
 
     public Student(double GPA) {
-        this.gpa = gpa;
+        this.gpa = GPA;
     }
 
     public Student(String name, int age, String address, double gpa) {

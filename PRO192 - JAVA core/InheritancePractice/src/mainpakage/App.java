@@ -31,12 +31,12 @@ public class App {
 //        list.add(d);
         System.out.println("Type of person you want to add ");
         sc.next();
-        if ()
         System.out.print("Enter number of student you want to add: " );
         int num = sc.nextInt();
         for (int i = 0; i < num; i++) {
-            
-            list.add(scanInfo());
+            Student temp = new Student();
+            temp.scanInfo();
+            list.add(temp);
         }
 
         for (Person ps : list) {
