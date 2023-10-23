@@ -1,1 +1,0 @@
-Student{ID=ID5, Name=Student 5, aver=8.5}

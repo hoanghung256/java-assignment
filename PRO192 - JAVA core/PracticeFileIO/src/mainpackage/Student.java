@@ -11,9 +11,9 @@ package mainpackage;
 public class Student {
     private String ID;
     private String Name;
-    private Float aver;
+    private float aver;
 
-    public Student(String ID, String Name, Float aver) {
+    public Student(String ID, String Name, float aver) {
         this.ID = ID;
         this.Name = Name;
         this.aver = aver;
@@ -35,11 +35,11 @@ public class Student {
         this.Name = Name;
     }
 
-    public Float getAver() {
+    public float getAver() {
         return aver;
     }
 
-    public void setAver(Float aver) {
+    public void setAver(float aver) {
         this.aver = aver;
     }
 
