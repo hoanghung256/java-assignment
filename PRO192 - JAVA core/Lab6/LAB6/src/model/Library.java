@@ -26,12 +26,14 @@ public class Library {
     
     
     public void showAllBook() {
-        boolean check = loadData();
-        if (check) {
+        System.out.println("List of books");
+        System.out.println("-------------------------------------");
+        if (loadData()) {
             listOfBook.forEach(b -> System.out.println(b));
         } else {
             System.out.println("Load data failed...");
         }
+        System.out.println("-------------------------------------");
     }
     
     public void searchByCriteria() {

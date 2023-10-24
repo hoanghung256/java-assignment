@@ -8,7 +8,7 @@ package model;
  *
  * @author hoang
  */
-public class Book {
+public class Book extends Library{
     private String id;
     private String title;
     private String author;

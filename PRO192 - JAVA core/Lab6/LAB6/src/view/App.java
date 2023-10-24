@@ -4,7 +4,7 @@
  */
 package view;
 
-import controller.LibraryManagement;
+import controller.*;
 import java.util.ArrayList;
 
 /**
@@ -15,11 +15,11 @@ public class App {
     public static void main(String[] args) {
         String menuTitle = "Library Mangement";
         ArrayList<String> options = new ArrayList<>();
-        options.add("List all book");
+        options.add("List all books");
         options.add("Search book");
         options.add("Add new book");
         options.add("Exit");
-        LibraryManagement lib_manager = new LibraryManagement(menuTitle, options);
-        lib_manager.run();
+        LibraryManagement libManager = new LibraryManagement(menuTitle, options);
+        libManager.run();
     }
 }
