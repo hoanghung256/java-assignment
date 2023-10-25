@@ -4,25 +4,28 @@
  */
 package controller;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 import model.Book;
 import view.Menu;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.function.Predicate;
 
 /**
  *
  * @author hoang
  */
 public class LibraryManagement extends Menu<String> {
-    private Book model = new Book();
+
+    private final Book model = new Book();
     private Menu<String> menu;
     private Menu<String> searchMenu;
-    
+
     public LibraryManagement(String title, ArrayList<String> options) {
         super(title, options);
         createSearchMenu();
     }
-    
+
     private void createSearchMenu() {
         String subMenuTitle = "Book Searching";
         ArrayList<String> subOptions = new ArrayList<>();
@@ -30,25 +33,38 @@ public class LibraryManagement extends Menu<String> {
         subOptions.add("Find by Title");
         subOptions.add("Find by Author");
         subOptions.add("Find by Year of publishing");
-        searchMenu = new Menu<String>(subMenuTitle, subOptions) {
-            @Override
+        searchMenu = new Menu<String>(subMenuTitle, subOptions) {       //Anonymous class extends Menu<T> abstract class
+            Scanner sc = new Scanner(System.in);
+
+            @Override       //Override excute() for search menu
             public void execute(int choice) {
                 switch (choice) {
                     case 1:
-//                        model.findByBookID();
-                        System.out.println("search1");
+                        System.out.print("Enter ID: ");
+                        String searchId = sc.nextLine();
+                        Predicate<Book> searchById = b -> b.getId().equals(searchId);
+                        model.searchByCriteria(searchById);
                         break;
                     case 2:
-//                        model.findByTitle();
-                        System.out.println("search2");
+                        System.out.print("Enter title: ");
+                        String searchTitle = sc.nextLine();
+                        Predicate<Book> searchByTitle = b -> b.getTitle().equals(searchTitle);
+                        model.searchByCriteria(searchByTitle);
                         break;
                     case 3:
-//                        model.findByAuthor();
-                        System.out.println("search3");
+                        System.out.print("Enter author's name: ");
+                        String searchAuthor = sc.nextLine();
+                        Predicate<Book> searchByAuthor = b -> b.getAuthor().equals(searchAuthor);
+                        model.searchByCriteria(searchByAuthor);
                         break;
                     case 4:
-//                        model.findByYearOfPublishing();
-                        System.out.println("search4");
+                        System.out.print("Enter year: ");
+                        String searchYear = sc.nextLine();
+                        Predicate<Book> searchByYear = b -> {
+                            String[] date =  b.getPublishDate().split("/");
+                            return date[date.length - 1].equals(searchYear);
+                        };
+                        model.searchByCriteria(searchByYear);
                         break;
                     default:
                         break;
@@ -57,7 +73,7 @@ public class LibraryManagement extends Menu<String> {
         };
     }
 
-    @Override
+    @Override       //Override excute() for main menu
     public void execute(int choice) {
         switch (choice) {
             case 1:
@@ -73,7 +89,7 @@ public class LibraryManagement extends Menu<String> {
                 System.out.println("Goodbye!!!");
                 System.exit(0);
             default:
-                
+
                 break;
         }
     }

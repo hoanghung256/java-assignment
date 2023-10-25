@@ -11,19 +11,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 /**
  *
  * @author hoang
  */
 public class Library {
-    private ArrayList<Book> listOfBook = new ArrayList<>();
+    private final ArrayList<Book> listOfBook = new ArrayList<>();
     private static final File FILE = new File("src");
     private static final String PATH = FILE.getAbsolutePath();
     private static final String FILE_NAME = "\\model\\lib.txt";
-    
-    //Load data from file into book list
-    
     
     public void showAllBook() {
         System.out.println("List of books");
@@ -36,8 +34,15 @@ public class Library {
         System.out.println("-------------------------------------");
     }
     
-    public void searchByCriteria() {
-        
+    public void searchByCriteria(Predicate<Book> criteria) {
+        System.out.println("Book matched");
+        System.out.println("-------------------------------------");
+        for (Book b : listOfBook) {
+            if (criteria.test(b)) {
+                System.out.println(b.toString());
+            }
+        }
+        System.out.println("-------------------------------------");
     }
     
     public void addNewBook() {
@@ -61,7 +66,7 @@ public class Library {
     private boolean loadData() {
         String std;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(PATH + FILE_NAME))) {    //try with resource
+        try (BufferedReader br = new BufferedReader(new FileReader(PATH + FILE_NAME))) {    //Try with resource
             while ((std = br.readLine()) != null) {
                 String[] b = std.split(";");
                 listOfBook.add(new Book(b[0], b[1], b[2], b[3]));  

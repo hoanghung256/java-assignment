@@ -4,6 +4,9 @@
  */
 package model;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *
  * @author hoang
@@ -18,10 +21,18 @@ public class Book extends Library{
     }
 
     public Book(String id, String title, String author, String publishDate) {
-        this.id = id;
+        if (validateId(id)) {
+            this.id = id;
+        } else {
+            System.out.println("The CusId does not accept the format (fading B and has 4 keys)");
+        }
         this.title = title;
         this.author = author;
-        this.publishDate = publishDate;
+        if (validateDate(publishDate)) {
+            this.publishDate = publishDate;
+        } else {
+            System.out.println("DatePublished must be in the correct Date format: dd/mm/yyyy");
+        }
     }
 
     public String getId() {
@@ -29,7 +40,11 @@ public class Book extends Library{
     }
 
     public void setId(String id) {
-        this.id = id;
+        if (validateId(id)) {
+            this.id = id;
+        } else {
+            System.out.println("The CusId does not accept the format (fading B and has 4 keys)");
+        }
     }
 
     public String getTitle() {
@@ -53,11 +68,27 @@ public class Book extends Library{
     }
 
     public void setPublishDate(String publishDate) {
-        this.publishDate = publishDate;
+        if (validateDate(publishDate)) {
+            this.publishDate = publishDate;
+        } else {
+            System.out.println("DatePublished must be in the correct Date format: dd/mm/yyyy");
+        }
     }
 
     @Override
     public String toString() {
         return "Book{"+ id + " - " + title + " - " + author + " - " + publishDate + '}';
+    }
+    
+    private boolean validateId(String id) {
+        Pattern pattern = Pattern.compile("^[B][0-9]{3}$");
+        Matcher matcher = pattern.matcher(id);
+        return matcher.matches();
+    }
+    
+    private boolean validateDate(String date) {
+        Pattern pattern = Pattern.compile("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/((19|20)\\d\\d)$");
+        Matcher matcher = pattern.matcher(date);
+        return matcher.matches();
     }
 }
