@@ -19,10 +19,10 @@ public abstract class Menu<T> {
     public Menu() {
     }
 
-    public Menu(String title, ArrayList<T> option) {
+    public Menu(String title, String[] option) {
         this.title = title;
         this.options = new ArrayList<>();
-        for (T s : option) {
+        for (String s : option) {
             options.add((T) s);
         }
     }

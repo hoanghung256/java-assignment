@@ -9,9 +9,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -22,8 +26,13 @@ public class Library {
     private static final File FILE = new File("src");
     private static final String PATH = FILE.getAbsolutePath();
     private static final String FILE_NAME = "\\model\\lib.txt";
-    
-    public void showAllBook() {
+    static final SimpleDateFormat FORMATTER = new SimpleDateFormat("dd/MM/yyyy");
+    static final Pattern ID_PATTERN = Pattern.compile("^[B][0-9]{3}$");
+
+    public Library() {
+    }
+
+    public void showAllBook() throws ParseException {
         System.out.println("List of books");
         System.out.println("-------------------------------------");
         if (loadData()) {
@@ -33,43 +42,53 @@ public class Library {
         }
         System.out.println("-------------------------------------");
     }
-    
-    public void searchByCriteria(Predicate<Book> criteria) {
-        System.out.println("Book matched");
-        System.out.println("-------------------------------------");
+
+    public ArrayList<Book> searchByCriteria(Predicate<Book> criteria) {
+        ArrayList<Book> matched = new ArrayList<>();
         for (Book b : listOfBook) {
             if (criteria.test(b)) {
-                System.out.println(b.toString());
+                matched.add(b);
             }
         }
-        System.out.println("-------------------------------------");
+        return matched;
     }
-    
+
     public void addNewBook() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter book's ID: ");
-        String id = sc.nextLine();
+        String id = "";
+        do {
+            System.out.print("Enter ID: ");
+            id = id + sc.nextLine();
+        } while (isValidID(id) == false);
         System.out.print("Enter book's title: ");
         String title = sc.nextLine();
         System.out.print("Enter name of author: ");
         String author = sc.nextLine();
-        System.out.print("Enter published date: ");
-        String publishDate = sc.nextLine();
-        listOfBook.add(new Book(id, title, author, publishDate));
-        if (saveData()) {
-            System.out.println("Add new book into databsae succeed...");
-        } else {
-            System.out.println("Add new book into databsae falied...");
+        String date = "";
+        do {
+            System.out.print("Enter published date: ");
+            date = date + sc.nextLine();
+        } while (isValidDate(date) == false);
+
+        try {
+            listOfBook.add(new Book(id, title, author, convertStringToDate(date)));
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
-    
-    private boolean loadData() {
+
+
+private boolean loadData() {
         String std;
 
         try (BufferedReader br = new BufferedReader(new FileReader(PATH + FILE_NAME))) {    //Try with resource
             while ((std = br.readLine()) != null) {
                 String[] b = std.split(";");
-                listOfBook.add(new Book(b[0], b[1], b[2], b[3]));  
+                try {
+                    listOfBook.add(new Book(b[0], b[1], b[2], convertStringToDate(b[3])));
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -77,7 +96,7 @@ public class Library {
         }
         return true;
     }
-    
+
     private boolean saveData() {
         try (PrintWriter pr = new PrintWriter(PATH + FILE_NAME);) {
             for (Book s : listOfBook) {
@@ -89,5 +108,27 @@ public class Library {
             return false;
         }
         return true;
-    } 
+    }
+
+    public static boolean isValidDate(String date) {
+        FORMATTER.setLenient(false);
+        try {
+             FORMATTER.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+    public static boolean isValidID(String id) {
+        return ID_PATTERN.matcher(id).matches();
+    }
+    
+    public static Date convertStringToDate(String dateString) throws Exception {
+        return FORMATTER.parse(dateString);
+    }
+    
+    public static String convertDateToString(Date date) throws Exception {
+        return FORMATTER.format(date);
+    }
 }
