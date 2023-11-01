@@ -4,17 +4,15 @@
  */
 package model;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 /**
  *
  * @author hoang
  */
-public class Book {
+public class Book implements Comparable<Book>{
     private String id;
     private String title;
     private String author;
@@ -66,10 +64,16 @@ public class Book {
     public String toString() {
         String toString = "";
         try {
-            toString += "Book{" + id + " - " + title + " - " + author + " - " + Library.convertDateToString(publishDate) + '}';
+            toString += "Book{" + id + " - " + title + " - " + author + " - " + Validation.convertDateToString(publishDate) + '}';
         } catch (Exception ex) {
             Logger.getLogger(Book.class.getName()).log(Level.SEVERE, null, ex);
         }
         return toString;
     }
+
+    @Override
+    public int compareTo(Book b) {
+        return this.getPublishDate().compareTo(b.getPublishDate());
+    }
+    
 }

@@ -5,6 +5,7 @@
 package controller;
 
 import java.text.ParseException;
+import java.util.Comparator;
 import model.*;
 import view.Menu;
 
@@ -16,8 +17,9 @@ import java.util.function.Predicate;
  * @author hoang
  */
 public class LibraryManagement extends Menu<String> {
+
     private final Library model = new Library();
-    private static final String[] menuOptions = {"List all books", "Search book", "Add new book", "Exit"};
+    private static final String[] menuOptions = {"List all books", "Search book", "Add new book", "Remove a book", "Sort by date published", "Exit"};
     private static final String[] searchMenuOptions = {"Find by BookID", "Find by Title", "Find by Author", "Find by Year of publishing"};
     private Menu<String> searchMenu;
 
@@ -27,7 +29,7 @@ public class LibraryManagement extends Menu<String> {
     }
 
     private void createSearchMenu() {
-        
+
         //Define search menu with annonymous class
         searchMenu = new Menu<String>("Book Searching", searchMenuOptions) {
             Scanner sc = new Scanner(System.in);
@@ -40,7 +42,7 @@ public class LibraryManagement extends Menu<String> {
                         System.out.print("Enter ID: ");
                         String searchId = sc.nextLine();
                         Predicate<Book> searchById = b -> b.getId().equals(searchId);
-                        model.searchByCriteria(searchById).forEach(s -> System.out.println(s.toString()));
+                        Library.printResult(model.searchByCriteria(searchById));
                         break;
                     case 2:
                         System.out.print("Enter title: ");
@@ -63,9 +65,6 @@ public class LibraryManagement extends Menu<String> {
                         };
                         model.searchByCriteria(searchByYear).forEach(s -> System.out.println(s.toString()));
                         break;
-                    default:
-                        System.out.println("Invalid choice");
-                        break;
                 }
             }
         };
@@ -78,9 +77,9 @@ public class LibraryManagement extends Menu<String> {
             case 1:
                 try {
                 model.showAllBook();
-                } catch (ParseException ex) {
-                    System.out.println(ex.getMessage());
-                }
+            } catch (ParseException ex) {
+                System.out.println(ex.getMessage());
+            }
             break;
             case 2:
                 searchMenu.run();
@@ -89,11 +88,14 @@ public class LibraryManagement extends Menu<String> {
                 model.addNewBook();
                 break;
             case 4:
+                model.removeBook();
+                break;
+            case 5:
+                model.sortByPublishedDate();
+                break;
+            case 6:
                 System.out.println("Goodbye!!!");
                 System.exit(0);
-            default:
-                System.out.println("Invalid choice");
-                break;
         }
     }
 
