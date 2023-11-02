@@ -41,7 +41,8 @@ public class Test {
         System.out.println("Save data into DB succceed...");
     }
 
-    public static void loadData(String fName) {
+    //Load date from StudentData.txt
+    public static void loadData(String fName) { 
         String std;
 
         try (BufferedReader br = new BufferedReader(new FileReader(path + fName))) {    //try with resource
@@ -55,7 +56,7 @@ public class Test {
 
     }
 
-//------------------------------------------------------------------
+    //Save data from ArrayList into StudentDB.txt
     public static void saveData(String fName) {
         try (PrintWriter pr = new PrintWriter(path + fName);) {
             for (Student s : stdList) {
