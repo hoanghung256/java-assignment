@@ -17,7 +17,6 @@ import java.util.function.Predicate;
  * @author hoang
  */
 public class LibraryManagement extends Menu<String> {
-
     private final Library model = new Library();
     private static final String[] menuOptions = {"List all books", "Search book", "Add new book", "Remove a book", "Sort by date published", "Exit"};
     private static final String[] searchMenuOptions = {"Find by BookID", "Find by Title", "Find by Author", "Find by Year of publishing"};
@@ -29,7 +28,6 @@ public class LibraryManagement extends Menu<String> {
     }
 
     private void createSearchMenu() {
-
         //Define search menu with annonymous class
         searchMenu = new Menu<String>("Book Searching", searchMenuOptions) {
             Scanner sc = new Scanner(System.in);
