@@ -15,7 +15,7 @@ import java.util.Date;
 public class Validation {
     private static final String DATE_FORMAT = "dd/MM/yyyy";
     
-    public static boolean isValidQuantity(String checkQuantity) {
+    public static boolean isValidInt(String checkQuantity) {
         int quantity;
         try {
             quantity = Integer.parseInt(checkQuantity);
@@ -26,7 +26,7 @@ public class Validation {
         return true;
     }
     
-    public static boolean isValidPrice(String checkPrice) {
+    public static boolean isValidDouble(String checkPrice) {
         double price;
         try {
             price = Double.parseDouble(checkPrice);

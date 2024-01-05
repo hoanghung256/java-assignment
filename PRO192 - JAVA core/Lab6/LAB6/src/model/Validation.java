@@ -34,11 +34,7 @@ public class Validation {
         Matcher check = ID_PATTERN.matcher(id);
         if (check.matches()) {
             Library lib = new Library();
-            Predicate<Book> isValidId = b -> b.getId().equals(id);
-            if (lib.searchByCriteria(isValidId).isEmpty()) {
-                return true;
-            }
-            System.out.println("ID already exists!");
+            
             return false;
         } 
         System.out.println("The CusId does not accept the format (fading B and has 4 keys)");

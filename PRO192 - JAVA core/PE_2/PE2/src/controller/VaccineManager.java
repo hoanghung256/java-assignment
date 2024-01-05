@@ -82,7 +82,7 @@ public class VaccineManager extends Menu {
         while (true) {
             System.out.print("Enter quantity: ");
             quantity = sc.nextLine();
-            if (Validation.isValidQuantity(quantity)) {
+            if (Validation.isValidInt(quantity)) {
                 break;
             }
         }
@@ -100,7 +100,7 @@ public class VaccineManager extends Menu {
         while (true) {
             System.out.print("Enter price: ");
             price = sc.nextLine();
-            if (Validation.isValidPrice(price)) {
+            if (Validation.isValidDouble(price)) {
                 break;
             }
         }
@@ -150,7 +150,7 @@ public class VaccineManager extends Menu {
         try (BufferedReader br = new BufferedReader(new FileReader(INPUT_FILE_NAME))) {    //try with resource
             while ((std = br.readLine()) != null) {
                 String[] b = std.split(",");
-                if (Validation.isValidQuantity(b[2].split("=")[1]) && Validation.isValidDate(b[3].split("=")[1]) && Validation.isValidPrice(b[4].split("=")[1]) && Validation.isValidDate(b[5].split("=")[1])) {
+                if (Validation.isValidInt(b[2].split("=")[1]) && Validation.isValidDate(b[3].split("=")[1]) && Validation.isValidDouble(b[4].split("=")[1]) && Validation.isValidDate(b[5].split("=")[1])) {
                     try {
                         vaccines.add(new Vaccine(b[0].split("=")[1], b[1].split("=")[1], Integer.parseInt(b[2].split("=")[1]), Validation.convertStringToDate(b[3].split("=")[1]), Double.parseDouble(b[4].split("=")[1]), Validation.convertStringToDate(b[5].split("=")[1])));
                     } catch (Exception ex) {
