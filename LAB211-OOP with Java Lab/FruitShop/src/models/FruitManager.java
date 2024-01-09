@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 public class FruitManager {
     private static FileManager db = new FileManager();
     private static ArrayList<Fruit> fruits;
-    private OrderManager orderManager = new OrderManager();
+    private static OrderManager orderManager = new OrderManager();
     
     public FruitManager() {
         fruits = db.readFruitsFromFile();
@@ -44,8 +44,12 @@ public class FruitManager {
     public boolean updateFruitsQuantity(Fruit updateFruit, int buyQuantity) {
         for (Fruit fruit : fruits) {
             if (fruit.equals(updateFruit)) {
-                fruit.setQuantity(fruit.getQuantity() - buyQuantity);
-                return true;
+                if (fruit.getQuantity() - buyQuantity == 0) {
+                    fruits.remove(fruit);
+                } else {
+                    fruit.setQuantity(fruit.getQuantity() - buyQuantity );
+                    return true;
+                }
             }
         }
         return false;

@@ -1,4 +1,4 @@
-1,Coconut,2,6,Vietnam
+1,Coconut,2,2,Vietnam
 2,Orange,3,10,US
 3,Apple,4,3,Thailand
 4,Grape,6,10,France

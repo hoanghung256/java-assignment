@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.function.Predicate;
 
 /**
  *
@@ -17,10 +19,14 @@ import java.util.HashMap;
 public class OrderManager {
     private ArrayList<Order> orderList;
     private FileManager db;
+    private Validation validator;
+    private FruitManager fruitManager;
     
     public OrderManager() {
         db = new FileManager();
         orderList = new ArrayList<>();
+        validator = new Validation();
+        fruitManager = new FruitManager();
     }
     
     public void displayAllOrders() {
@@ -56,4 +62,34 @@ public class OrderManager {
         }
         System.out.println("Total: " +  total + "$");
     }
+    
+    public HashMap<Fruit, Integer> getCurrentOrder() {
+         Scanner sc = new Scanner(System.in);
+        HashMap<Fruit, Integer> order = new HashMap<>();
+        boolean isContinue = true;
+        
+        do {
+            fruitManager.displayAllFruit();
+
+            int searchId = validator.getAndValidInt("Enter fruit ID: ");
+            Predicate<Fruit> searchById = f -> (f.getId() == searchId);
+            Fruit result = fruitManager.searchByCriteria(searchById);
+
+            System.out.println("You selected: " + result.getName());
+            int buyQuantity = validator.getAndValidBuyQuantity("Enter quantity: ", result);
+            
+            fruitManager.updateFruitsQuantity(result, buyQuantity);
+            
+            System.out.print("Do you want to order now (Y/N):");
+            String choice = sc.nextLine();
+            if (choice.charAt(0) == 'Y') {
+                isContinue = false;
+            }
+
+            order.put(result, buyQuantity);
+        } while (isContinue == true);
+        
+        return order;
+    }
 }
+
