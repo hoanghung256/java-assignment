@@ -1,0 +1,5 @@
+Student{ID=001, Name=Nguyen Van A, aver=9.5}
+Student{ID=002, Name=Nguyen Van B, aver=9.0}
+Student{ID=003, Name=Nguyen Van C, aver=7.0}
+Student{ID=004, Name=Nguyen Van D, aver=8.5}
+Student{ID=005, Name=Nguyen Van E, aver=7.5}

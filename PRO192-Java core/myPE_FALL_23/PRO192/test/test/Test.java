@@ -2,17 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package view;
-
-import controller.FruitShopManager;
+package test;
 
 /**
  *
  * @author hoang
  */
-public class Main {
-    public static void main(String[] args) {
-        FruitShopManager shop = new FruitShopManager();
-        shop.run();
-    }
+public class Test {
+    
 }
