@@ -1,1 +1,0 @@
-Student{ID=005, Name=Nguyen Van E, aver=7.5}

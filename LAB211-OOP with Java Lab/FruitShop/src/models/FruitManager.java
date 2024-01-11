@@ -28,8 +28,15 @@ public class FruitManager {
     }
     
     public void displayAllFruit() {
-//        System.out.println("|  ID  |  Fruit Name  |  Origin  |  Price  |  Remain  |");
-        fruits.forEach(fruit -> System.out.println(fruit.toString()));
+        String leftAlignFormat = "| %-3s | %-12s | %-8s | %-6s | %-7s |%n";
+
+        System.out.format("+-----+--------------+----------+--------+---------+%n");
+        System.out.format("| ID  | Fruit Name   | Origin   | Price  | Remain  |%n");
+        System.out.format("+-----+--------------+----------+--------+---------+%n");
+
+        fruits.forEach(fruit -> System.out.format(leftAlignFormat, fruit.getId(), fruit.getName(), fruit.getOrigin(), fruit.getPrice(), fruit.getQuantity()));
+
+        System.out.format("+-----+--------------+----------+--------+---------+%n");
     }
        
     public Fruit searchByCriteria(Predicate<Fruit> criteria) {

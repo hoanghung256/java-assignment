@@ -1,7 +1,0 @@
-ID:NV0001,Name:Tu Hai,Department:IT,pass:abc@123,Dob:12/10/2000
-ID:NV0002,Name:CHi Pheo,Department:FN,pass:abc@123,Dob:11/09/1995
-ID:003AAA,Name:Thi No,Department:IT,pass:abc@123,Dob:27/02/1991
-ID:KAB004,Name:Lao Hac,Department:TR,pass:abc@123,Dob:23/01/1959
-ID:NV0005,Name:Thuy Kieu,Department:ST,pass:abc@123,Dob:02/11/1998
-ID:NV0006,Name:Thuy Nga,Department:TR,pass:abc@123,Dob:02/11/1990
-ID:NV0006,Name:Nguyen Du,Department:ST,pass:abc@123,Dob:02/11/1990
