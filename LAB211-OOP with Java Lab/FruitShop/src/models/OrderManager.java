@@ -18,9 +18,9 @@ import java.util.function.Predicate;
  */
 public class OrderManager {
     private ArrayList<Order> orderList;
-    private FileManager db;
-    private Validation validator;
-    private FruitManager fruitManager;
+    private final FileManager db;
+    private final Validation validator;
+    private final FruitManager fruitManager;
     
     public OrderManager() {
         db = new FileManager();
@@ -30,7 +30,8 @@ public class OrderManager {
     }
     
     public void displayAllOrders() {
-        orderList = getOrderFromFile();
+        getOrderFromFile();
+        
         for (Order order : orderList) {
             System.out.println("Customer: " + order.getCustomerName());
             displayOrder(order.getCustomerorder());
@@ -43,8 +44,8 @@ public class OrderManager {
         orderList.add(order);
     }
     
-    public ArrayList<Order> getOrderFromFile() {
-        return db.readOrdersFromFile();
+    public void getOrderFromFile() {
+        orderList = db.readOrdersFromFile();
     }
     
     public void writeOrderIntoFile() {
@@ -52,19 +53,25 @@ public class OrderManager {
     }
     
     public static void displayOrder(HashMap<Fruit, Integer> order) {
+        String leftAlignFormat = "| %-12s | %-8s | %-5s | %-6s |%n";
+        System.out.format("+--------------+----------+-------+--------+%n");
+        System.out.format("| Fruit Name   | Quantity | Price | Amount |%n");
+        System.out.format("+--------------+----------+-------+--------+%n");
+        
         int total = 0;
         for (Fruit key : order.keySet()) {
             int price = key.getPrice();
             int quantity = order.get(key);
             int amount = price * quantity;
             total += amount;
-            System.out.println("Fruit name: " + key.getName() + ", Quantity: " + quantity + ", Price: " + price + "$, Amount: " + amount + "$");
+            System.out.format(leftAlignFormat, key.getName(), quantity, price + "$", amount + "$");
         }
+        System.out.format("+--------------+----------+-------+--------+%n");
         System.out.println("Total: " +  total + "$");
     }
     
     public HashMap<Fruit, Integer> getCurrentOrder() {
-         Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         HashMap<Fruit, Integer> order = new HashMap<>();
         boolean isContinue = true;
         
@@ -75,21 +82,39 @@ public class OrderManager {
             Predicate<Fruit> searchById = f -> (f.getId() == searchId);
             Fruit result = fruitManager.searchByCriteria(searchById);
 
-            System.out.println("You selected: " + result.getName());
+            if (result.getName() == null) {
+                System.out.println("Fruit not found");
+            } else {
+                System.out.println("You selected: " + result.getName());
+            }
             int buyQuantity = validator.getAndValidBuyQuantity("Enter quantity: ", result);
             
             fruitManager.updateFruitsQuantity(result, buyQuantity);
             
             System.out.print("Do you want to order now (Y/N):");
-            String choice = sc.nextLine();
-            if (choice.charAt(0) == 'Y') {
+            char choice = sc.nextLine().charAt(0);
+            if (choice == 'Y' || choice == 'y') {
                 isContinue = false;
             }
-
-            order.put(result, buyQuantity);
+            
+            if (isContainsInCurrentOrder(order, result)) {
+                order.put(result, order.get(result) + buyQuantity);
+            } else {
+                order.put(result, buyQuantity);
+            }
         } while (isContinue == true);
         
         return order;
+    }
+    
+    private static boolean isContainsInCurrentOrder(HashMap<Fruit, Integer> order, Fruit fruit) {
+        for (Fruit f : order.keySet()) {
+            if (f.getName().equals(fruit.getName())) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
 

@@ -20,9 +20,9 @@ import models.Order;
  * @author hoang
  */
 public class FileManager {
-    private static final String path = new File("src").getAbsolutePath();
-    private static final String fruitsPath = "\\database\\fruits.txt";
-    private static final String ordersPath = "\\database\\orders.txt";
+    private final String path = new File("src").getAbsolutePath();
+    private final String fruitsPath = "\\database\\fruits.txt";
+    private final String ordersPath = "\\database\\orders.txt";
     
     public ArrayList<Fruit> readFruitsFromFile() {
         String line;
@@ -75,8 +75,9 @@ public class FileManager {
                         customerName.append(line);
                         continue;
                     } else if (Character.isDigit(line.charAt(0))) {
-                        buyQuantity = line.charAt(0) - '0';
-                        String[] values = line.substring(2, line.length()).split(",");
+                        int quantityLength = getBuyQuantityLength(line);
+                        buyQuantity =  Integer.parseInt(line.substring(0, quantityLength));
+                        String[] values = line.substring(quantityLength + 1, line.length()).split(",");
                         fruit = new Fruit(values[0], Integer.parseInt(values[1]));
                         orderTable.put(fruit, buyQuantity);
                     }
@@ -112,5 +113,19 @@ public class FileManager {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+    
+    private static int getBuyQuantityLength(String line) {
+        int count = 0;
+        
+        for (int i = 0; i < line.length(); i++) {
+            if (Character.isDigit(line.charAt(i))) {
+                count++;
+                continue;
+            }
+            break;
+        }
+        
+        return count;
     }
 }

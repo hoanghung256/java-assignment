@@ -11,7 +11,7 @@ import java.util.Scanner;
  * @author hoang
  */
 public class Validation {
-    private final String fruitRegex = "[a-zA-Z]+";
+    private final String stringRegex = "[a-zA-Z]+";
     private final String intRegex = ".*\\d+.*";
 
     public String getValue(String msg) {
@@ -26,8 +26,8 @@ public class Validation {
         while (true) {
             input = getValue(msg);
 
-            if (!input.matches("[a-zA-Z]+")) {
-                System.out.println("Input can not contain digit!");
+            if (!input.matches(stringRegex)) {
+                System.out.println("Input only contains alphabet character!");
                 continue;
             }
             
@@ -41,8 +41,8 @@ public class Validation {
         while (true) {
             input = getValue(msg);
 
-            if (!input.matches(intRegex)) {
-                System.out.println("Invalid input enter again");
+            if (!input.matches(intRegex) || Integer.parseInt(input) <= 0) {
+                System.out.println("Invalid input enter again!");
                 continue;
             } 
             return Integer.parseInt(input);
@@ -62,14 +62,4 @@ public class Validation {
             return input;
         }
     }
-    
-//    public boolean isContinue(String msg) {
-//        String input;
-//        
-//        while (true) {
-//            input = getValue(msg);
-//            
-//            if (input)
-//        }
-//    }
 }

@@ -1,5 +1,2 @@
-New customer
-2-Coconut,2
-Hunggg
-1-Coconut,2
-9-Orange,3
+Hung
+7-Coconut,2

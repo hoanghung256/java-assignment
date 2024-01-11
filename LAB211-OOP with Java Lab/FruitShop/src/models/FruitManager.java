@@ -13,12 +13,11 @@ import java.util.function.Predicate;
  * @author hoang
  */
 public class FruitManager {
-    private static FileManager db = new FileManager();
-    private static ArrayList<Fruit> fruits;
-    private static OrderManager orderManager = new OrderManager();
+    private final FileManager db;
+    private ArrayList<Fruit> fruits;
     
     public FruitManager() {
-        fruits = db.readFruitsFromFile();
+        db = new FileManager();
     }
     
     public void addNewFruit(Fruit fruit) {
@@ -28,6 +27,7 @@ public class FruitManager {
     }
     
     public void displayAllFruit() {
+        fruits = db.readFruitsFromFile();
         String leftAlignFormat = "| %-3s | %-12s | %-8s | %-6s | %-7s |%n";
 
         System.out.format("+-----+--------------+----------+--------+---------+%n");
@@ -40,29 +40,39 @@ public class FruitManager {
     }
        
     public Fruit searchByCriteria(Predicate<Fruit> criteria) {
-        for (Fruit fruit : fruits) {
-            if (criteria.test(fruit)) {
-                return fruit; 
+        Fruit fruit = new Fruit();
+        for (Fruit f : fruits) {
+            if (criteria.test(f)) {
+                fruit = f;
+                break;
             }
         }
-        return null;
+        return fruit;
     }
     
-    public boolean updateFruitsQuantity(Fruit updateFruit, int buyQuantity) {
-        for (Fruit fruit : fruits) {
-            if (fruit.equals(updateFruit)) {
-                if (fruit.getQuantity() - buyQuantity == 0) {
-                    fruits.remove(fruit);
+    public void updateFruitsQuantity(Fruit updateFruit, int buyQuantity) {
+        int i = 0;
+        
+        for (; i < fruits.size(); i++) {
+            if (fruits.get(i).equals(updateFruit)) {
+                if (fruits.get(i).getQuantity() - buyQuantity == 0) {
+                    fruits.remove(i);
+                    break;
                 } else {
-                    fruit.setQuantity(fruit.getQuantity() - buyQuantity );
-                    return true;
+                    System.out.println(fruits.get(i).getQuantity() - buyQuantity);
+                    fruits.get(i).setQuantity(fruits.get(i).getQuantity() - buyQuantity);
+                    System.out.println(fruits.get(i).getQuantity());
+                    break;
                 }
             }
         }
-        return false;
+        
+        db.writeFruitsIntoFile(fruits);
     }
     
     public void writeFruitsIntoFile() {
-        db.writeFruitsIntoFile(fruits);
+        if (fruits != null) {
+            db.writeFruitsIntoFile(fruits);
+        }
     }
 }

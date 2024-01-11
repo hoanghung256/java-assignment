@@ -5,8 +5,6 @@
 package controller;
 
 import java.util.HashMap;
-import java.util.Scanner;
-import java.util.function.Predicate;
 import models.*;
 import view.Menu;
 
@@ -15,14 +13,17 @@ import view.Menu;
  * @author hoang
  */
 public class FruitShopManager extends Menu<String> {
-    private static FruitManager fruitManager = new FruitManager();
-    private static OrderManager orderManager = new OrderManager();
-    private static Validation validator = new Validation();
+    private final FruitManager fruitManager;
+    private final OrderManager orderManager;
+    private final Validation validator;
     private static final String menuTitle = "FRUIT SHOP SYSTEM";
     private static final String[] menuOptions = { "Create Fruit", "View order", "Shopping", "Display all fruits", "Exit" };
 
     public FruitShopManager() {
         super(menuTitle, menuOptions);
+        fruitManager = new FruitManager();
+        orderManager = new OrderManager();
+        validator = new Validation();
     }
 
     @Override
@@ -32,13 +33,13 @@ public class FruitShopManager extends Menu<String> {
                 createNewFruit();
                 break;
             case 2:
-                displayAllOrders();
+                orderManager.displayAllOrders();
                 break;
             case 3:
                 shopping();
                 break;
             case 4:
-                displayAllFruit();
+                fruitManager.displayAllFruit();
                 break;
             case 5:
                 exit();
@@ -46,7 +47,7 @@ public class FruitShopManager extends Menu<String> {
         }
     }
 
-    private static void createNewFruit() {
+    private void createNewFruit() {
         String name = validator.getAndValidString("Enter name: ");
         int price = validator.getAndValidInt("Enter price: ");
         int quantity = validator.getAndValidInt("Enter quantity: ");
@@ -56,11 +57,8 @@ public class FruitShopManager extends Menu<String> {
         fruitManager.addNewFruit(newFruit);
     }
 
-    private static void displayAllOrders() {
-        orderManager.displayAllOrders();
-    }
-
-    private static void shopping() {
+    private void shopping() {
+        orderManager.getOrderFromFile();
         HashMap<Fruit, Integer> order = orderManager.getCurrentOrder();
         OrderManager.displayOrder(order);
 
@@ -70,12 +68,9 @@ public class FruitShopManager extends Menu<String> {
         orderManager.writeOrderIntoFile();
     }
 
-    private static void displayAllFruit() {
-        fruitManager.displayAllFruit();
-    }
-
-    private static void exit() {
+    private void exit() {
         fruitManager.writeFruitsIntoFile();
+        orderManager.writeOrderIntoFile();
         System.out.println("Goodbye");
         System.exit(0);
     }
