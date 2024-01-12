@@ -11,7 +11,7 @@ import java.util.Scanner;
  * @author hoang
  */
 public class Validation {
-    private final String stringRegex = "[a-zA-Z]+";
+    private final String stringRegex = "[a-zA-Z\\s]+";
     private final String intRegex = ".*\\d+.*";
 
     public String getValue(String msg) {

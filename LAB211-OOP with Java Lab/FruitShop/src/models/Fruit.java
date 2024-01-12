@@ -4,6 +4,8 @@
  */
 package models;
 
+import java.util.Objects;
+
 /**
  *
  * @author hoang
@@ -79,12 +81,6 @@ public class Fruit {
         this.origin = origin;
     }
 
-//    @Override
-//    public String toString() {
-////        return "   " + Id + "       " + name + "        " + origin + "        " + price + "$        " + quantity + "";
-//          
-//    }
-
     @Override
     public String toString() {
         return "Fruit{" + "Id=" + Id + ", name=" + name + ", price=" + price + ", quantity=" + quantity + ", origin=" + origin + '}';
@@ -96,5 +92,27 @@ public class Fruit {
     
     public String toOrderFileString() {
         return name + "," + price;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        // Case that o reference to itself
+        if (this == o) {
+            return true;
+        }
+        
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
+        
+        Fruit fruit = (Fruit) o;
+        
+        return this.Id == fruit.Id;
+    }
+    
+    // Make HashMap generate hash code by ID
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id);
     }
 }

@@ -1,8 +1,5 @@
-1,Coconut,2,10,UK
-2,Orange,3,10,US
-3,Apple,4,10,Thailand
-4,Grape,6,10,France
+1,Coconut,2,2,UK
 5,Banana,5,10,Vietnam
 6,Dragon fruit,2,10,Vietnam
-7,Mango,7,10,Thailand
+7,Mango,7,7,Thailand
 8,Cherry,10,10,US

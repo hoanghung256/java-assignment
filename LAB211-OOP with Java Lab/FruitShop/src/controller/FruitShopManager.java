@@ -53,8 +53,7 @@ public class FruitShopManager extends Menu<String> {
         int quantity = validator.getAndValidInt("Enter quantity: ");
         String origin = validator.getAndValidString("Enter origin: ");
         
-        Fruit newFruit = new Fruit(name, price, quantity, origin);
-        fruitManager.addNewFruit(newFruit);
+        fruitManager.addNewFruit(name, price, quantity, origin);
     }
 
     private void shopping() {

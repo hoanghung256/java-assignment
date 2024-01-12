@@ -5,8 +5,6 @@
 package models;
 
 import database.FileManager;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -84,37 +82,32 @@ public class OrderManager {
 
             if (result.getName() == null) {
                 System.out.println("Fruit not found");
+                continue;
             } else {
                 System.out.println("You selected: " + result.getName());
             }
             int buyQuantity = validator.getAndValidBuyQuantity("Enter quantity: ", result);
             
-            fruitManager.updateFruitsQuantity(result, buyQuantity);
+            handleNewOrder(order, result, buyQuantity);
             
             System.out.print("Do you want to order now (Y/N):");
             char choice = sc.nextLine().charAt(0);
             if (choice == 'Y' || choice == 'y') {
                 isContinue = false;
             }
-            
-            if (isContainsInCurrentOrder(order, result)) {
-                order.put(result, order.get(result) + buyQuantity);
-            } else {
-                order.put(result, buyQuantity);
-            }
         } while (isContinue == true);
         
+        fruitManager.updateFruitsQuantity(order);
         return order;
     }
     
-    private static boolean isContainsInCurrentOrder(HashMap<Fruit, Integer> order, Fruit fruit) {
-        for (Fruit f : order.keySet()) {
-            if (f.getName().equals(fruit.getName())) {
-                return true;
-            }
+    private static void handleNewOrder(HashMap<Fruit, Integer> order, Fruit fruit, int buyQuantity) {
+        if (order.containsKey(fruit)) {
+            order.put(fruit, order.get(fruit) + buyQuantity);
+            return;
         }
         
-        return false;
+        order.put(fruit, buyQuantity);
     }
 }
 
