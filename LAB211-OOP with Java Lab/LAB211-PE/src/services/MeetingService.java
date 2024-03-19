@@ -4,14 +4,19 @@
  */
 package services;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 import models.Meeting;
 import models.MeetingDetail;
-import repository.MeetingRepository;
+import models.Register;
+import models.Staff;
+import repository.MeetingDetailRepository;
+import repository.RegisterRepository;
 import utils.IDGenerator;
+import utils.Validation;
 
 /**
  *
@@ -20,9 +25,11 @@ import utils.IDGenerator;
 public class MeetingService {
     private static MeetingService instance;
     private ArrayList<MeetingDetail> meetingDetails;
-    private HashMap<String, Meeting> meetings;
+    private HashMap<String, Register> registers;
 
     private MeetingService() {
+        meetingDetails = MeetingDetailRepository.getInstance().getMeetingDetails();
+        registers = RegisterRepository.getInstance().getRegisters();
     }
 
     public static MeetingService getInstance() {
@@ -33,52 +40,66 @@ public class MeetingService {
     }
 
     public void viewAllMeetingSchedule() {
-        if (meetingDetails == null) {
-            meetingDetails = MeetingRepository.getInstance().getMeetingDetails();
-        }
-        if (meetings == null) {
-            meetings = MeetingRepository.getInstance().getMeetings();
-        }
-
-        for (String meetingId : meetings.keySet()) {
-            System.out.println(meetings.get(meetingId));
+        for (MeetingDetail meetingDetail : meetingDetails) {
+            System.out.println(registers.get(meetingDetail.getMeetingId()));
         }
     }
 
     public void registerMeetingSchedule() {
-        Scanner sc = new Scanner(System.in);
         Meeting meeting = null;
 
         while (true) {
-            System.out.println("Entering metting information.");
-            System.out.print("Meeting description: ");
-            String description = sc.nextLine();
-            System.out.print("Meeting date: ");
-            String meetingDate = sc.nextLine();
-            System.out.print("Start time: ");
-            String startTime = sc.nextLine();
-            System.out.print("End time: ");
-            String endTime = sc.nextLine();
-            System.out.print("Location: ");
-            String location = sc.nextLine();
-            
-            meeting = new Meeting(IDGenerator.generate("M", meetings.size()), 0, 0, LocalDate.MIN, description, LocalDate.MAX, LocalDate.MAX, LocalTime.MIN, LocalTime.MIN, 0)
-        }
-        
-        while (true) {
-                System.out.println("Entering detail for meeting.");
-                System.out.print("Participant name: ");
-                String staffName = sc.nextLine();
-                System.out.print("Reason: ");
-                String reason = sc.nextLine();
-                meetingDetails.add(new MeetingDetail());
-                
-                System.out.println("Want to continue enter participant for meeting(Y/N): ");
-                char isContinue = sc.next().charAt(0);
-                
-                if (isContinue == 'N') {
-                    break;
+            System.out.println("Entering meeting information.");
+            String description = Validation.getValue("Meeting description: ");
+            LocalDate meetingDate = Validation.getDate("Meeting date: ");
+            LocalTime startTime = Validation.getTime("Start time: ");
+            LocalTime endTime = Validation.getTime("End time: ");
+            String location = Validation.getValue("Location: ");
+            String staffId = null;
+            while (true) {
+                staffId = Validation.getValue("Enter your ID: ");
+                if (UserService.getInstance().findById(staffId) == null) {
+                    System.out.println("Staff ID not exists!");
+                    continue;
                 }
+                break;
             }
+            meeting = new Meeting(IDGenerator.generate("M", meetingDetails.size()),
+                    IDGenerator.generate("R", registers.size()),
+                    staffId,
+                    LocalDate.now(),
+                    description,
+                    meetingDate,
+                    meetingDate,
+                    startTime,
+                    endTime,
+                    location);
+            registers.put(meeting.getId(), meeting);
+            break;
+        }
+
+        while (true) {
+            System.out.println("Entering detail for meeting.");
+            Staff staff = null;
+            while (true) {
+                String staffName = Validation.getValue("Participant name: ");
+                staff = StaffService.getInstance().findByName(staffName);
+                if (staff == null) {
+                    System.out.println("Staff not exists!");
+                    continue;
+                }
+                break;
+            }
+            String reason = Validation.getValue("Reason: ");
+            meetingDetails.add(new MeetingDetail(IDGenerator.generate("MD", meetingDetails.size()), meeting.getId(),
+                    staff.getStaffId(), reason));
+
+            System.out.println("Want to continue enter participant for meeting(Y/N): ");
+            char isContinue = Validation.getValue("Want to continue enter participant for meeting?(Y/N): ").charAt(0);
+
+            if (isContinue == 'N') {
+                break;
+            }
+        }
     }
 }

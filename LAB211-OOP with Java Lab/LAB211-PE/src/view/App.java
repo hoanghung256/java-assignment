@@ -14,23 +14,24 @@ import services.UserService;
  * @author hoang hung
  */
 public class App {
-    /**username: emily_davis
+    /**
+     * username: emily_davis
      * pass: pass456
      * lever: manager
      */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         User loginUser = null;
-        
+
         System.out.println("Welcome...");
         while (true) {
             System.out.print("Enter your username: ");
             String username = sc.nextLine();
-            
+
             System.out.print("Enter your password: ");
             String password = sc.nextLine();
-            
-            loginUser = UserService.login(username, password);
+
+            loginUser = UserService.getInstance().login(username, password);
             if (loginUser != null) {
                 break;
             } else {
@@ -38,7 +39,7 @@ public class App {
                 continue;
             }
         }
-        
+
         Controller controller = new Controller(loginUser);
         controller.run();
     }

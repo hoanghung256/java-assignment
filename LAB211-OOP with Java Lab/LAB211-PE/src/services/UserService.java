@@ -14,14 +14,35 @@ import repository.UserRepository;
  * @author hoang hung
  */
 public class UserService {
-     public static User login(String username, String password) {
-        ArrayList<User> users = UserRepository.getInstance().readFile();
+    private static UserService instance;
+    private ArrayList<User> users;
+
+    private UserService() {
+        users = UserRepository.getInstance().readFile();
+    }
+
+    public static UserService getInstance() {
+        if (instance == null) {
+            instance = new UserService();
+        }
+        return instance;
+    }
+
+    public User login(String username, String password) {
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 return user;
             }
         }
-        
+        return null;
+    }
+
+    public User findById(String staffId) {
+        for (User user : users) {
+            if (user.getStaffId().equals(staffId)) {
+                return user;
+            }
+        }
         return null;
     }
 }

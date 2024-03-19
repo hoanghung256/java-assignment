@@ -17,7 +17,7 @@ import models.Notification;
 public class NotificationRepository {
     private static NotificationRepository notiRepo = null;
     private final String srcPath = new File("src").getAbsolutePath();
-    final String usersPath = "\\data\\notifications.txt";
+    final String notiPath = "\\data\\notifications.txt";
     
     private NotificationRepository() {
     }
@@ -32,7 +32,7 @@ public class NotificationRepository {
     
     public ArrayList<Notification> getNoti() {
         String line;
-        try (BufferedReader input = new BufferedReader(new FileReader(srcPath + usersPath))) {
+        try (BufferedReader input = new BufferedReader(new FileReader(srcPath + notiPath))) {
             ArrayList<Notification> notifications = new ArrayList<>();
             while((line = input.readLine())!= null){
                 String[] attributes = line.split(";");
@@ -51,7 +51,7 @@ public class NotificationRepository {
      */
     public ArrayList<Notification> getNoti(int staffId) {
         String line;
-        try (BufferedReader input = new BufferedReader(new FileReader(srcPath + usersPath))) {
+        try (BufferedReader input = new BufferedReader(new FileReader(srcPath + notiPath))) {
             ArrayList<Notification> notifications = new ArrayList<>();
             while((line = input.readLine())!= null){
                 String[] attributes = line.split(";");
