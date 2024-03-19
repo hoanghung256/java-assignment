@@ -9,7 +9,7 @@ package models;
  * @author hoang hung
  */
 public class Staff {
-    private int staffId;
-    private int departmentId;
+    private String staffId;
+    private String departmentId;
     private String staffName;
 }

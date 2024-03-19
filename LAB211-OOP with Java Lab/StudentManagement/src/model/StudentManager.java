@@ -6,6 +6,7 @@ package model;
 
 import database.FileManager;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 /**
  *
@@ -18,5 +19,42 @@ public class StudentManager {
     public StudentManager() {
         fileManager = new FileManager();
         this.students = fileManager.readFromFile();
+    }
+    
+    public void showAllStudent() {
+        
+    }
+    
+    public void sortStudentByName() {
+        
+    }
+    
+    public void showSameAddressStudent() {
+        
+    }
+    
+    public void showReport() {
+        
+    }
+    
+    public void updateInfor(Student s) {
+        
+    }
+    
+    public void deleteStudent(Student s) {
+        
+    }
+    
+    public Student searchStudent(Predicate<Student> criteria) {
+        for (Student s : students) {
+            if (criteria.test(s)) {
+                return s;
+            }
+        }
+        return null;
+    }
+    
+    public void writeStudentsToFile() {
+        fileManager.writeIntoFile(students);
     }
 }

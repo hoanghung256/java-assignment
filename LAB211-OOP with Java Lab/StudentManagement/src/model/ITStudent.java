@@ -24,8 +24,28 @@ public class ITStudent extends Student {
         this.cssScore = cssScore;
     }
 
+    public double getJavaScore() {
+        return javaScore;
+    }
+
+    public void setJavaScore(double javaScore) {
+        this.javaScore = javaScore;
+    }
+
+    public double getCssScore() {
+        return cssScore;
+    }
+
+    public void setCssScore(double cssScore) {
+        this.cssScore = cssScore;
+    }
+    
+    public double getAverageScore() {
+        return (3 * javaScore + cssScore) / 4;
+    }
+
     @Override
     public String toString() {
-        return "ITStudent{" + super.toString() + ", javaScore=" + javaScore + ", cssScore=" + cssScore + '}';
+        return "ITStudent{Name=" + super.getFullName() +  "GPA=" + this.getAverageScore() + '}';
     }
 }

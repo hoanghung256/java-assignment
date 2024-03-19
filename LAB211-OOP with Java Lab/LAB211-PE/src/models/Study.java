@@ -4,10 +4,18 @@
  */
 package models;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 /**
  *
  * @author hoang hung
  */
 public class Study extends Register {
-    private int studyId;
+    private String studyId;
+
+    public Study(String studyId, String registerId, String staffId, LocalDate registerDate, String description, LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, String location) {
+        super(registerId, staffId, registerDate, description, startDate, endDate, startTime, endTime, location);
+        this.studyId = studyId;
+    }
 }

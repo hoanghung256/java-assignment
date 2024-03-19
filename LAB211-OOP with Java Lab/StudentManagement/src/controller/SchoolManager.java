@@ -13,7 +13,7 @@ import model.StudentManager;
  */
 public class SchoolManager extends Menu<String> {
     private static final String MENU_TITLE = "MANAGE STUDENT SYSTEM";
-    private static final String[] MENU_OPTION = {"Display all student", "Sort student by name", "Display students with sam address", "Update student information", "Display report"};
+    private static final String[] MENU_OPTION = {"Display all student", "Sort student by name", "Display students with sam address", "Update student information", "Display report", "Exit"};
     private StudentManager studentManager;
 
     public SchoolManager() {
@@ -25,29 +25,39 @@ public class SchoolManager extends Menu<String> {
     public void execute(int chooice) {
         switch (chooice) {
             case 1:
-                
+                studentManager.showAllStudent();
                 break;
             case 2:
-                
+                studentManager.sortStudentByName();
                 break;
             case 3:
-                
+                studentManager.showSameAddressStudent();
                 break;
             case 4:
-                
+                updateStudentInfor();
                 break;
             case 5:
-                
+                deleteStudent();
                 break;
             case 6:
-                this.exit();
+                studentManager.showReport();
+            case 7:
+                exit();
                 break;    
         }
     }
     
+    private void updateStudentInfor() {
+        
+    }
+    
+    private void deleteStudent() {
+        
+    }
     
     private void exit() {
         System.out.println("Goodbye");
         System.exit(0);
+        studentManager.writeStudentsToFile();
     }
 }

@@ -1,22 +1,17 @@
 package models;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 /**
  *
  * @author hoang hung
  */
 public class User {
-    private int userId;
-    private int staffId;
+    private String userId;
+    private String staffId;
     private String username;
     private String password;
     private String lever;
 
-    public User(int userId, int staffId, String username, String password, String lever) {
+    public User(String userId, String staffId, String username, String password, String lever) {
         this.userId = userId;
         this.staffId = staffId;
         this.username = username;
@@ -24,19 +19,19 @@ public class User {
         this.lever = lever;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public int getStaffId() {
+    public String getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(int staffId) {
+    public void setStaffId(String staffId) {
         this.staffId = staffId;
     }
 
@@ -66,6 +61,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", staffId=" + staffId + ", username=" + username + ", password=" + password + ", lever=" + lever + '}';
+        return "User{" + "userId=" + userId + ", staffId=" + staffId + ", username=" + username + ", password="
+                + password + ", lever=" + lever + '}';
     }
 }

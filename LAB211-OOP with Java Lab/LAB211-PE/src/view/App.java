@@ -7,13 +7,17 @@ package view;
 import controller.Controller;
 import java.util.Scanner;
 import models.User;
-import services.AuthenticationService;
+import services.UserService;
 
 /**
  *
  * @author hoang hung
  */
 public class App {
+    /**username: emily_davis
+     * pass: pass456
+     * lever: manager
+     */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         User loginUser = null;
@@ -26,7 +30,7 @@ public class App {
             System.out.print("Enter your password: ");
             String password = sc.nextLine();
             
-            loginUser = AuthenticationService.login(username, password);
+            loginUser = UserService.login(username, password);
             if (loginUser != null) {
                 break;
             } else {
@@ -35,7 +39,7 @@ public class App {
             }
         }
         
-        Controller controller = new Controller(loginUser.getLever());
+        Controller controller = new Controller(loginUser);
         controller.run();
     }
 }

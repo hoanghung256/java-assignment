@@ -33,9 +33,13 @@ public class BizStudent extends Student {
     public void setMktScore(double mktScore) {
         this.mktScore = mktScore;
     }
+    
+    public double getAverageScore() {
+        return (2 * accScore + mktScore) / 3;
+    }
 
     @Override
     public String toString() {
-        return "BizStudent{" + super.toString() +  "accScore=" + accScore + ", mktScore=" + mktScore + '}';
+        return "BizStudent{Name=" + super.getFullName() +  "GPA=" + this.getAverageScore() + '}';
     }
 }

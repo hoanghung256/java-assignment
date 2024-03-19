@@ -9,39 +9,39 @@ package models;
  * @author hoang hung
  */
 public class Notification {
-    private int notiId;
-    private int senderId;
-    private int receiverId;
+    private String notiId;
+    private String senderId;
+    private String receiverId;
     private String description;
 
-    public Notification(int notiId, int senderId, int receiverId, String description) {
+    public Notification(String notiId, String senderId, String receiverId, String description) {
         this.notiId = notiId;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.description = description;
     }
 
-    public int getNotiId() {
+    public String getNotiId() {
         return notiId;
     }
 
-    public void setNotiId(int notiId) {
+    public void setNotiId(String notiId) {
         this.notiId = notiId;
     }
 
-    public int getSenderId() {
+    public String getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(int senderId) {
+    public void setSenderId(String senderId) {
         this.senderId = senderId;
     }
 
-    public int getReceiverId() {
+    public String getReceiverId() {
         return receiverId;
     }
 
-    public void setReceiverId(int receiverId) {
+    public void setReceiverId(String receiverId) {
         this.receiverId = receiverId;
     }
 
@@ -55,6 +55,6 @@ public class Notification {
 
     @Override
     public String toString() {
-        return "Notification{" + "notiId=" + notiId + ", senderId=" + senderId + ", receiverId=" + receiverId + ", description=" + description + '}';
+        return String.format("| %-2s | %-9s | %-11s | %-55s |", notiId, senderId, receiverId, description);
     }
 }
