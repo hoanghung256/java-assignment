@@ -1,0 +1,5 @@
+1; Conference room A
+2; Boardroom
+3; Meeting room 1
+4; Conference room B
+5; Training room

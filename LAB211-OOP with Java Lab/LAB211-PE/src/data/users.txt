@@ -1,0 +1,5 @@
+1; 1001; john_doe; password123; manager
+2; 1002; jane_smith; securePass; staff
+3; 1003; mike_jackson; secret123; staff
+4; 1004; emily_davis; pass456; manager
+5; 1005; david_williams; password789; staff
