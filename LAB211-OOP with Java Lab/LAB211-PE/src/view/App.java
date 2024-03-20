@@ -8,6 +8,7 @@ import controller.Controller;
 import java.util.Scanner;
 import models.User;
 import services.UserService;
+import utils.Validation;
 
 /**
  *
@@ -20,27 +21,24 @@ public class App {
      * lever: manager
      */
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        User loginUser = null;
+        // User loginUser = null;
 
-        System.out.println("Welcome...");
-        while (true) {
-            System.out.print("Enter your username: ");
-            String username = sc.nextLine();
+        // System.out.println("Welcome");
+        // while (true) {
+        // String username = Validation.getValue("Enter your username: ");
 
-            System.out.print("Enter your password: ");
-            String password = sc.nextLine();
+        // String password = Validation.getValue("Enter your password: ");
 
-            loginUser = UserService.getInstance().login(username, password);
-            if (loginUser != null) {
-                break;
-            } else {
-                System.out.println("Wrong username or password!");
-                continue;
-            }
-        }
+        // loginUser = UserService.getInstance().login(username, password);
+        // if (loginUser != null) {
+        // break;
+        // } else {
+        // System.out.println("Wrong username or password!");
+        // continue;
+        // }
+        // }
 
-        Controller controller = new Controller(loginUser);
+        Controller controller = new Controller();
         controller.run();
     }
 }

@@ -11,7 +11,7 @@ import java.time.LocalTime;
  *
  * @author hoang hung
  */
-public abstract class Register {
+public abstract class Register implements Comparable<Register> {
     private String registerId;
     private String staffId;
     private LocalDate registerDate;
@@ -22,7 +22,8 @@ public abstract class Register {
     private LocalTime endTime;
     private String location;
 
-    public Register(String registerId, String staffId, LocalDate registerDate, String description, LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, String location) {
+    public Register(String registerId, String staffId, LocalDate registerDate, String description, LocalDate startDate,
+            LocalDate endDate, LocalTime startTime, LocalTime endTime, String location) {
         this.registerId = registerId;
         this.staffId = staffId;
         this.registerDate = registerDate;
@@ -108,6 +109,13 @@ public abstract class Register {
 
     @Override
     public String toString() {
-        return "Register{" + "registerId=" + registerId + ", staffId=" + staffId + ", registerDate=" + registerDate + ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate + ", startTime=" + startTime + ", endTime=" + endTime + ", location=" + location + '}';
+        return "Register{" + "registerId=" + registerId + ", staffId=" + staffId + ", registerDate=" + registerDate
+                + ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate + ", startTime="
+                + startTime + ", endTime=" + endTime + ", location=" + location + '}';
+    }
+
+    @Override
+    public int compareTo(Register o) {
+        return this.registerDate.compareTo(o.getRegisterDate());
     }
 }

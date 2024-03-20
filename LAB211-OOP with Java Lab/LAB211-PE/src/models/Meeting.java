@@ -15,7 +15,8 @@ public class Meeting extends Register {
     private String id;
     private String locationId;
 
-    public Meeting(String id, String registerId, String staffId, LocalDate registerDate, String description, LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, String locationId) {
+    public Meeting(String id, String registerId, String staffId, LocalDate registerDate, String description,
+            LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, String locationId) {
         super(registerId, staffId, registerDate, description, startDate, endDate, startTime, endTime, null);
         this.id = id;
         this.locationId = locationId;

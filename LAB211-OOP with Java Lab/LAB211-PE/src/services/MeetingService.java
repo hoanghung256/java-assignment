@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeSet;
 
 import models.Meeting;
 import models.MeetingDetail;
@@ -24,7 +25,7 @@ import utils.Validation;
 public class MeetingService {
     private static MeetingService instance;
     private ArrayList<MeetingDetail> meetingDetails;
-    private HashMap<String, Meeting> meetingRegisters;
+    private TreeSet<Meeting> meetingRegisters;
 
     private MeetingService() {
         meetingDetails = MeetingDetailRepository.getInstance().getMeetingDetails();
@@ -39,9 +40,7 @@ public class MeetingService {
     }
 
     public void viewAllMeetingSchedule() {
-        for (MeetingDetail meetingDetail : meetingDetails) {
-            System.out.println(meetingRegisters.get(meetingDetail.getMeetingId()));
-        }
+        meetingRegisters.forEach(System.out::println);
 
         while (true) {
             char isViewDetail = Validation.getValue("Want to view meeting detail?(Y/N): ").charAt(0);
@@ -83,7 +82,7 @@ public class MeetingService {
                     startTime,
                     endTime,
                     location);
-            meetingRegisters.put(meeting.getId(), meeting);
+            meetingRegisters.add(meeting);
             RegisterRepository.getInstance().increaseRegisterIndex();
             break;
         }
@@ -108,7 +107,7 @@ public class MeetingService {
         if (containsMeeting(meetingId)) {
             System.out.println("Detail for meeting " + meetingId);
             meetingDetails.stream()
-                    .filter(detail -> detail.getMeetingId().equals(meetingId))      // Filter meeting details match meetingId that input 
+                    .filter(detail -> detail.getMeetingId().equals(meetingId)) // Filter meeting details match meetingId that inputted
                     .forEach(System.out::println);
         } else {
             System.out.println("Meeting does not exists!");

@@ -10,7 +10,7 @@ import models.Staff;
 public class StaffRepository {
     private static StaffRepository instance;
     private final String srcPath = new File("src").getAbsolutePath();
-    final String usersPath = "\\data\\users.txt";
+    final String usersPath = "\\data\\staffs.txt";
     private ArrayList<Staff> staffs;
 
     private StaffRepository() {
