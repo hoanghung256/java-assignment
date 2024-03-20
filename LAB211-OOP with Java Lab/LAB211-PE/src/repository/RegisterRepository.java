@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
+import java.util.TreeSet;
 
 import models.Meeting;
 import models.Register;
@@ -18,14 +18,26 @@ public class RegisterRepository {
     private final String srcPath = new File("src").getAbsolutePath();
     private final String registerPath = "\\data\\registers.txt";
     /**
-     * A mapping of specify Register object IDs to its Register objects.
-     * <p>
-     * The key is a String representing the type ID,
-     * and the value is a Register object containing details of the register.
+     * TreeSet using for keep the order by date of registers
      */
-    HashMap<String, Register> registers;
+    private TreeSet<Meeting> meetings;
+    private TreeSet<Work> works;
+    private TreeSet<Vacation> vacations;
+    private TreeSet<Study> studies;
+
+    /**
+     * The last index of register in file
+     * Use for generate a new register ID
+     */
+    private int registerIndex;
 
     private RegisterRepository() {
+        registerIndex = 0;
+        meetings = new TreeSet<>();
+        works = new TreeSet<>();
+        vacations = new TreeSet<>();
+        studies = new TreeSet<>();
+        this.readRegisters();
     }
 
     public static RegisterRepository getInstance() {
@@ -35,27 +47,42 @@ public class RegisterRepository {
         return instance;
     }
 
-    public HashMap<String, Register> getRegisters() {
-        if (registers == null) {
-            registers = this.readRegisters();
-        }
-        return registers;
+    public TreeSet<Meeting> getMeetingRegisters() {
+        return meetings;
     }
 
-    private HashMap<String, Register> readRegisters() {
+    public TreeSet<Work> getWorkRegisters() {
+        return works;
+    }
+
+    public TreeSet<Vacation> getVacationRegisters() {
+        return vacations;
+    }
+
+    public TreeSet<Study> getStudyRegisters() {
+        return studies;
+    }
+
+    public int getRegisterIndex() {
+        return registerIndex;
+    }
+
+    public void increaseRegisterIndex() {
+        this.registerIndex += 1;
+    }
+
+    private void readRegisters() {
         String line;
-        registers = new HashMap<>();
 
         try (BufferedReader input = new BufferedReader(new FileReader(srcPath + registerPath))) {
             while ((line = input.readLine()) != null) {
                 String[] attributes = line.split(";");
                 Register register = this.clarifyRegisterType(attributes);
-                registers.put(attributes[0], register);
+                this.putRegisterByType(register);
+                registerIndex++;
             }
-            return registers;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return null;
         }
     }
 
@@ -111,5 +138,21 @@ public class RegisterRepository {
         }
 
         return register;
+    }
+
+    private void putRegisterByType(Register register) {
+        if (register instanceof Meeting) {
+            Meeting meeting = (Meeting) register;
+            meetings.add(meeting);
+        } else if (register instanceof Work) {
+            Work work = (Work) register;
+            works.add(work);
+        } else if (register instanceof Vacation) {
+            Vacation vaca = (Vacation) register;
+            vacations.add(vaca);
+        } else if (register instanceof Study) {
+            Study study = (Study) register;
+            studies.add(study);
+        }
     }
 }
