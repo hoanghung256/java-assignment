@@ -11,7 +11,6 @@ import java.util.HashMap;
 
 import models.Meeting;
 import models.MeetingDetail;
-import models.Register;
 import models.Staff;
 import repository.MeetingDetailRepository;
 import repository.RegisterRepository;
@@ -25,11 +24,11 @@ import utils.Validation;
 public class MeetingService {
     private static MeetingService instance;
     private ArrayList<MeetingDetail> meetingDetails;
-    private HashMap<String, Register> registers;
+    private HashMap<String, Meeting> meetingRegisters;
 
     private MeetingService() {
         meetingDetails = MeetingDetailRepository.getInstance().getMeetingDetails();
-        registers = RegisterRepository.getInstance().getRegisters();
+        meetingRegisters = RegisterRepository.getInstance().getMeetingRegisters();
     }
 
     public static MeetingService getInstance() {
@@ -41,7 +40,17 @@ public class MeetingService {
 
     public void viewAllMeetingSchedule() {
         for (MeetingDetail meetingDetail : meetingDetails) {
-            System.out.println(registers.get(meetingDetail.getMeetingId()));
+            System.out.println(meetingRegisters.get(meetingDetail.getMeetingId()));
+        }
+
+        while (true) {
+            char isViewDetail = Validation.getValue("Want to view meeting detail?(Y/N): ").charAt(0);
+            if (isViewDetail == 'Y' || isViewDetail == 'y') {
+                String meetingId = Validation.getValue("Enter meeting ID: ");
+                viewMeetingDetail(meetingId);
+            } else {
+                return;
+            }
         }
     }
 
@@ -65,7 +74,7 @@ public class MeetingService {
                 break;
             }
             meeting = new Meeting(IDGenerator.generate("M", meetingDetails.size()),
-                    IDGenerator.generate("R", registers.size()),
+                    IDGenerator.generate("R", RegisterRepository.getInstance().getRegisterIndex() + 1),
                     staffId,
                     LocalDate.now(),
                     description,
@@ -74,32 +83,39 @@ public class MeetingService {
                     startTime,
                     endTime,
                     location);
-            registers.put(meeting.getId(), meeting);
+            meetingRegisters.put(meeting.getId(), meeting);
+            RegisterRepository.getInstance().increaseRegisterIndex();
             break;
         }
 
         while (true) {
             System.out.println("Entering detail for meeting.");
-            Staff staff = null;
-            while (true) {
-                String staffName = Validation.getValue("Participant name: ");
-                staff = StaffService.getInstance().findByName(staffName);
-                if (staff == null) {
-                    System.out.println("Staff not exists!");
-                    continue;
-                }
-                break;
-            }
+            String staffId = Validation.getAndValidateStaffId("Enter participant ID: ");
             String reason = Validation.getValue("Reason: ");
             meetingDetails.add(new MeetingDetail(IDGenerator.generate("MD", meetingDetails.size()), meeting.getId(),
-                    staff.getStaffId(), reason));
+                    staffId, reason));
 
             System.out.println("Want to continue enter participant for meeting(Y/N): ");
             char isContinue = Validation.getValue("Want to continue enter participant for meeting?(Y/N): ").charAt(0);
 
-            if (isContinue == 'N') {
+            if (isContinue == 'N' || isContinue == 'n') {
                 break;
             }
         }
+    }
+
+    private void viewMeetingDetail(String meetingId) {
+        if (containsMeeting(meetingId)) {
+            System.out.println("Detail for meeting " + meetingId);
+            meetingDetails.stream()
+                    .filter(detail -> detail.getMeetingId().equals(meetingId))      // Filter meeting details match meetingId that input 
+                    .forEach(System.out::println);
+        } else {
+            System.out.println("Meeting does not exists!");
+        }
+    }
+
+    private boolean containsMeeting(String meetingId) {
+        return meetingDetails.stream().anyMatch(detail -> detail.getMeetingId().equals(meetingId));
     }
 }
