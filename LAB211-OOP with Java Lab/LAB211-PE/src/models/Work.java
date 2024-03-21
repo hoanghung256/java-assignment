@@ -41,10 +41,13 @@ public class Work extends Register {
 
     @Override
     public String toString() {
-        return "Work [workId=" + workId + ", transport=" + transport + super.toString() + "]";
+        return String.format("| %-11s | %-11s | %-13s | %-30s | %-10s | %-10s | %-20s | %-9s |",
+                this.getRegisterId(), this.workId, this.getRegisterDate(),
+                this.getDescription(), this.getStartDate(), this.getEndDate(),
+                this.getLocation(), this.transport);
     }
 
     public String toFileString() {
-        return this.workId + super.toFileString() +  this.transport;
+        return this.workId + super.toFileString() + this.transport;
     }
 }

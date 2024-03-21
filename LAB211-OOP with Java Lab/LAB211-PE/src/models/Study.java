@@ -30,7 +30,10 @@ public class Study extends Register {
 
     @Override
     public String toString() {
-        return "Study [studyId=" + studyId + super.toString() + "]";
+        return String.format("| %-11s | %-8s | %-13s | %-30s | %-12s | %-10s | %-8s | %-15s |",
+                this.getRegisterId(), this.studyId, this.getRegisterDate(),
+                this.getDescription(), this.getStartDate(), this.getStartTime(),
+                this.getEndTime(), this.getLocation());
     }
 
     public String toFileString() {

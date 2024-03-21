@@ -43,9 +43,21 @@ public class StaffService {
     }
 
     public void viewAllStaff() {
+        System.out.println(
+                "+----------+-------------------+---------------+");
+        System.out.println(String.format("| %-6s | %-17s | %-5s |",
+                "Staff ID", "Full Name", "Department ID"));
+        System.out.println(
+                "+----------+-------------------+---------------+");
         for (Staff staff : staffs) {
             System.out.println(staff);
         }
+        System.out.println(
+                "+----------+-------------------+---------------+");
+    }
+
+    public static void main(String[] args) {
+        StaffService.getInstance().viewAllStaff();
     }
 
     public void addStaff() {

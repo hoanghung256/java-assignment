@@ -40,10 +40,14 @@ public class Meeting extends Register {
 
     @Override
     public String toString() {
-        return "Meeting{" + super.toString() + "id=" + id + ", locationId=" + locationId + '}';
+        return String.format("| %-11s | %-10s | %-13s | %-20s | %-12s | %-10s | %-8s | %-11s |",
+                this.getRegisterId(), this.id, this.getRegisterDate(), this.getDescription(), this.getStartDate(),
+                this.getStartTime(), this.getEndTime(), this.getLocationId());
     }
 
     public String toFileString() {
-        return this.id + ";" + this.getRegisterId() + ";" + this.getRegisterDate() + ";" + this.getDescription() + ";" + this.getStartDate() + ";" + this.getEndDate() + ";" + this.getStartTime() + ";" + this.getEndTime() + this.locationId;
+        return this.id + ";" + this.getRegisterId() + ";" + this.getRegisterDate() + ";" + this.getDescription() + ";"
+                + this.getStartDate() + ";" + this.getEndDate() + ";" + this.getStartTime() + ";" + this.getEndTime()
+                + this.locationId;
     }
 }

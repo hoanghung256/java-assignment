@@ -55,6 +55,6 @@ public class MeetingDetail {
 
     @Override
     public String toString() {
-        return "MeetingDetail{" + "meetingDetailId=" + meetingDetailId + ", meetingId=" + meetingId + ", staffId=" + staffId + ", reason=" + reason + '}';
+        return String.format("| %-9s | %-8s | %-30s |", this.meetingDetailId, this.staffId, this.reason);
     }
 }

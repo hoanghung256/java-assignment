@@ -38,7 +38,16 @@ public class MeetingService {
     }
 
     public void viewAllMeetingSchedule() {
+        System.out.println(
+                "+-------------+------------+---------------+----------------------+--------------+------------+----------+-------------+");
+        System.out.println(String.format("| %-6s | %-5s | %-5s | %-20s | %-5s | %-5s | %-5s | %-5s |",
+                "Register ID", "Meeting ID", "Register date", "Description", "Meeting date", "Start time", "End time",
+                "Location ID"));
+        System.out.println(
+                "+-------------+------------+---------------+----------------------+--------------+------------+----------+-------------+");
         meetingRegisters.forEach(System.out::println);
+        System.out.println(
+                "+-------------+------------+---------------+----------------------+--------------+------------+----------+-------------+");
 
         while (true) {
             char isViewDetail = Validation.getValue("Want to view meeting detail?(Y/N): ").charAt(0);
@@ -52,11 +61,20 @@ public class MeetingService {
     }
 
     public void viewAllMeetingSchedule(String staffID) {
+        System.out.println(
+                "+-------------+------------+---------------+----------------------+--------------+------------+----------+-------------+");
+        System.out.println(String.format("| %-6s | %-5s | %-5s | %-20s | %-5s | %-5s | %-5s | %-5s |",
+                "Register ID", "Meeting ID", "Register date", "Description", "Meeting date", "Start time", "End time",
+                "Location ID"));
+        System.out.println(
+                "+-------------+------------+---------------+----------------------+--------------+------------+----------+-------------+");
         meetingRegisters.forEach(meeting -> {
             if (meeting.getStaffId().equals(staffID)) {
                 System.out.println(meeting);
             }
         });
+        System.out.println(
+                "+-------------+------------+---------------+----------------------+--------------+------------+----------+-------------+");
 
         while (true) {
             char isViewDetail = Validation.getValue("Want to view meeting detail?(Y/N): ").charAt(0);
@@ -122,14 +140,24 @@ public class MeetingService {
     private void viewMeetingDetail(String meetingId) {
         if (containsMeeting(meetingId)) {
             System.out.println("Detail for meeting " + meetingId);
+
+            System.out.println(
+                    "+-----------+----------+--------------------------------+");
+            System.out.println(String.format("| %-6s | %-5s | %-30s |",
+                    "Detail ID", "Staff ID", "Reason"));
+                    System.out.println(
+                        "+-----------+----------+--------------------------------+");
             meetingDetails.stream()
                     .filter(detail -> detail.getMeetingId().equals(meetingId)) // Filter meeting details match meetingId
-                                                                               // that inputted
+                    // that inputted
                     .forEach(System.out::println);
+                    System.out.println(
+                        "+-----------+----------+--------------------------------+");
         } else {
             System.out.println("Meeting does not exists!");
         }
     }
+
 
     private boolean containsMeeting(String meetingId) {
         return meetingDetails.stream().anyMatch(detail -> detail.getMeetingId().equals(meetingId));

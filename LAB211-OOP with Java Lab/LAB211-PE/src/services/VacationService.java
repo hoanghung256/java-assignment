@@ -28,15 +28,33 @@ public class VacationService {
     }
 
     public void viewAllVacationSchedule() {
+        System.out.println(
+                "+-------------+-------------+---------------+--------------------------------+--------------+------------+----------+----------------------+-------+");
+        System.out.println(String.format("| %-6s | %-5s | %-5s | %-30s | %-5s | %-1s | %-8s | %-20s | %-5s |",
+                "Register ID", "Vacation ID", "Register date", "Description", "Meeting date", "Start time", "End time",
+                "Location", "Bound"));
+        System.out.println(
+                "+-------------+-------------+---------------+--------------------------------+--------------+------------+----------+----------------------+-------+");
         vacationRegisters.forEach(System.out::println);
+        System.out.println(
+                "+-------------+-------------+---------------+--------------------------------+--------------+------------+----------+----------------------+-------+");
     }
 
     public void viewAllVacationSchedule(String staffId) {
+        System.out.println(
+                "+-------------+-------------+---------------+--------------------------------+--------------+------------+----------+----------------------+-------+");
+        System.out.println(String.format("| %-6s | %-5s | %-5s | %-30s | %-5s | %-1s | %-8s | %-20s | %-5s |",
+                "Register ID", "Vacation ID", "Register date", "Description", "Meeting date", "Start time", "End time",
+                "Location", "Bound"));
+        System.out.println(
+                "+-------------+-------------+---------------+--------------------------------+--------------+------------+----------+----------------------+-------+");
         vacationRegisters.forEach(vacation -> {
             if (vacation.getStaffId().equals(staffId)) {
                 System.out.println(vacation);
             }
         });
+        System.out.println(
+                "+-------------+-------------+---------------+--------------------------------+--------------+------------+----------+----------------------+-------+");
     }
 
     public void registerVacationSchedule() {

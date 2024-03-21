@@ -41,7 +41,10 @@ public class Vacation extends Register {
 
     @Override
     public String toString() {
-        return "Vacation [vacationId=" + vacationId + ", bound=" + bound + super.toString() + "]";
+        return String.format("| %-11s | %-11s | %-13s | %-30s | %-12s | %-10s | %-8s | %-20s | %-5s |",
+        this.getRegisterId(), this.vacationId, this.getRegisterDate(),
+        this.getDescription(), this.getStartDate(), this.getStartTime(),
+        this.getEndTime(), this.getLocation(), this.bound);
     }
 
     public String toFileString() {

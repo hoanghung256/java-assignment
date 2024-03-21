@@ -45,7 +45,7 @@ public class Staff {
 
     @Override
     public String toString() {
-        return "Staff [staffId=" + staffId + ", departmentId=" + departmentId + ", staffName=" + staffName + "]";
+        return String.format("| %-8s | %-17s | %-13s |", this.staffId, this.staffName, this.departmentId);
     }
 
     public String toFileString() {

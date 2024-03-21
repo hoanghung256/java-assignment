@@ -28,15 +28,33 @@ public class WorkService {
     }
 
     public void viewAllWorkSchedule() {
+        System.out.println(
+                "+-------------+-------------+---------------+--------------------------------+------------+------------+----------------------+-----------+");
+        System.out.println(String.format("| %-6s | %-5s | %-5s | %-30s | %-5s | %-10s | %-20s | %-9s |",
+                "Register ID", "Vacation ID", "Register date", "Description", "Start date", "End date",
+                "Location", "Transport"));
+        System.out.println(
+                "+-------------+-------------+---------------+--------------------------------+------------+------------+----------------------+-----------+");
         workRegisters.forEach(System.out::println);
+        System.out.println(
+                "+-------------+-------------+---------------+--------------------------------+------------+------------+----------------------+-----------+");
     }
 
     public void viewAllWorkSchedule(String staffId) {
+        System.out.println(
+                "+-------------+-------------+---------------+--------------------------------+------------+------------+----------------------+-----------+");
+        System.out.println(String.format("| %-6s | %-5s | %-5s | %-30s | %-5s | %-10s | %-20s | %-9s |",
+                "Register ID", "Vacation ID", "Register date", "Description", "Start date", "End date",
+                "Location", "Transport"));
+        System.out.println(
+                "+-------------+-------------+---------------+--------------------------------+------------+------------+----------------------+-----------+");
         workRegisters.forEach(work -> {
             if (work.getStaffId().equals(staffId)) {
                 System.out.println(work);
             }
         });
+        System.out.println(
+                "+-------------+-------------+---------------+--------------------------------+------------+------------+----------------------+-----------+");
     }
 
     public void registerWorkSchedule() {

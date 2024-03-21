@@ -28,15 +28,35 @@ public class StudyService {
     }
 
     public void viewAllStudySchedule() {
+        System.out.println(
+                "+-------------+----------+---------------+--------------------------------+--------------+------------+----------+-----------------+");
+        System.out.println(String.format("| %-6s | %-5s | %-5s | %-30s | %-5s | %-5s | %-5s | %-15s |",
+                "Register ID", "Study ID", "Register date", "Description", "Meeting date", "Start time", "End time",
+                "Location",
+                "Location ID"));
+        System.out.println(
+                "+-------------+----------+---------------+--------------------------------+--------------+------------+----------+-----------------+");
         studyRegisters.forEach(System.out::println);
+        System.out.println(
+                "+-------------+----------+---------------+--------------------------------+--------------+------------+----------+-----------------+");
     }
 
     public void viewAllStudySchedule(String staffId) {
+        System.out.println(
+                "+-------------+----------+---------------+--------------------------------+--------------+------------+----------+-----------------+");
+        System.out.println(String.format("| %-6s | %-5s | %-5s | %-30s | %-5s | %-5s | %-5s | %-15s |",
+                "Register ID", "Study ID", "Register date", "Description", "Meeting date", "Start time", "End time",
+                "Location",
+                "Location ID"));
+        System.out.println(
+                "+-------------+----------+---------------+--------------------------------+--------------+------------+----------+-----------------+");
         studyRegisters.forEach(study -> {
             if (study.getStaffId().equals(staffId)) {
                 System.out.println(study);
             }
         });
+        System.out.println(
+                "+-------------+----------+---------------+--------------------------------+--------------+------------+----------+-----------------+");
     }
 
     public void registerStudySchedule() {
