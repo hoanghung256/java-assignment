@@ -47,4 +47,8 @@ public class Staff {
     public String toString() {
         return "Staff [staffId=" + staffId + ", departmentId=" + departmentId + ", staffName=" + staffName + "]";
     }
+
+    public String toFileString() {
+        return this.staffId + ";" + this.departmentId + ";" + this.staffName;
+    }
 }

@@ -1,14 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
- *
+ *  An abstract class for 4 schedule types: Meeting, Work, Vacation, Study
  * @author hoang hung
  */
 public abstract class Register implements Comparable<Register> {
@@ -117,5 +113,9 @@ public abstract class Register implements Comparable<Register> {
     @Override
     public int compareTo(Register o) {
         return this.registerDate.compareTo(o.getRegisterDate());
+    }
+
+    public String toFileString() {
+        return this.registerId + ";" + this.registerDate + ";" + this.description + ";" + this.startDate + ";" + this.endDate + ";" + this.startTime + ";" + this.endTime + ";" + this.location;
     }
 }

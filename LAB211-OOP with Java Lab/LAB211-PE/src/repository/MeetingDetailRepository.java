@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 import models.MeetingDetail;
 
+/**
+ * @author hoang hung
+ */
 public class MeetingDetailRepository {
     private static MeetingDetailRepository instance;
     private final String srcPath = new File("src").getAbsolutePath();

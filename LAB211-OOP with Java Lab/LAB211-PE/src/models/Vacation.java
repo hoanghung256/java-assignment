@@ -43,4 +43,8 @@ public class Vacation extends Register {
     public String toString() {
         return "Vacation [vacationId=" + vacationId + ", bound=" + bound + super.toString() + "]";
     }
+
+    public String toFileString() {
+        return this.vacationId + super.toFileString() + this.bound;
+    }
 }

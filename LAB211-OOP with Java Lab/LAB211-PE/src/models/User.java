@@ -64,4 +64,8 @@ public class User {
         return "User{" + "userId=" + userId + ", staffId=" + staffId + ", username=" + username + ", password="
                 + password + ", lever=" + lever + '}';
     }
+
+    public String toFileString() {
+        return this.userId + ";" + this.staffId + ";" + this.username + ";" + this.password + ";" + this.lever;
+    }
 }

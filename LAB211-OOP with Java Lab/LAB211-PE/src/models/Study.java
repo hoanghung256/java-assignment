@@ -33,4 +33,7 @@ public class Study extends Register {
         return "Study [studyId=" + studyId + super.toString() + "]";
     }
 
+    public String toFileString() {
+        return this.studyId + super.toFileString();
+    }
 }

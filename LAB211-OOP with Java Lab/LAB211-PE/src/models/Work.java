@@ -43,4 +43,8 @@ public class Work extends Register {
     public String toString() {
         return "Work [workId=" + workId + ", transport=" + transport + super.toString() + "]";
     }
+
+    public String toFileString() {
+        return this.workId + super.toFileString() +  this.transport;
+    }
 }

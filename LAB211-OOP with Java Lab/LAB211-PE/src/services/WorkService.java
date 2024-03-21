@@ -2,8 +2,6 @@ package services;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Set;
 import java.util.TreeSet;
 
 import models.Work;
@@ -11,6 +9,9 @@ import repository.RegisterRepository;
 import utils.IDGenerator;
 import utils.Validation;
 
+/**
+ * @author hoang hung
+ */
 public class WorkService {
     private static WorkService instance;
     private TreeSet<Work> workRegisters;
@@ -30,13 +31,21 @@ public class WorkService {
         workRegisters.forEach(System.out::println);
     }
 
+    public void viewAllWorkSchedule(String staffId) {
+        workRegisters.forEach(work -> {
+            if (work.getStaffId().equals(staffId)) {
+                System.out.println(work);
+            }
+        });
+    }
+
     public void registerWorkSchedule() {
-        String staffId = Validation.getAndValidateStaffId("Enter staff ID: ");
+        String staffId = Validation.getAndValidateStaffId(1, "Enter staff ID: ");
         String description = Validation.getValue("Enter description: ");
-        LocalDate startDate = Validation.getDate("Enter start date: ");
-        LocalDate endDate = Validation.getDate("Enter end date: ");
-        LocalTime startTime = Validation.getTime("Enter start time: ");
-        LocalTime endTime = Validation.getTime("Enter end time: ");
+        LocalDate startDate = Validation.getDate(0, null, "Enter start date: ");
+        LocalDate endDate = Validation.getDate(1, startDate, "Enter end date: ");
+        LocalTime startTime = Validation.getTime(0, null, "Enter start time: ");
+        LocalTime endTime = Validation.getTime(1, startTime, "Enter end time: ");
         String location = Validation.getValue("Enter location: ");
         String transport = Validation.getValue("Enter transport: ");
 

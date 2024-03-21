@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 /**
@@ -9,19 +5,19 @@ package models;
  * @author hoang hung
  */
 public class Department {
-    private int departmentId;
+    private String departmentId;
     private String departmentName;
 
-    public Department(int departmentId, String departmentName) {
+    public Department(String departmentId, String departmentName) {
         this.departmentId = departmentId;
         this.departmentName = departmentName;
     }
 
-    public int getDepartmentId() {
+    public String getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(int departmentId) {
+    public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
     }
 

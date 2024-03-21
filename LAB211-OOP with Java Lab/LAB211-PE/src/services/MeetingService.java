@@ -7,12 +7,10 @@ package services;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.TreeSet;
 
 import models.Meeting;
 import models.MeetingDetail;
-import models.Staff;
 import repository.MeetingDetailRepository;
 import repository.RegisterRepository;
 import utils.IDGenerator;
@@ -53,15 +51,33 @@ public class MeetingService {
         }
     }
 
+    public void viewAllMeetingSchedule(String staffID) {
+        meetingRegisters.forEach(meeting -> {
+            if (meeting.getStaffId().equals(staffID)) {
+                System.out.println(meeting);
+            }
+        });
+
+        while (true) {
+            char isViewDetail = Validation.getValue("Want to view meeting detail?(Y/N): ").charAt(0);
+            if (isViewDetail == 'Y' || isViewDetail == 'y') {
+                String meetingId = Validation.getValue("Enter meeting ID: ");
+                viewMeetingDetail(meetingId);
+            } else {
+                return;
+            }
+        }
+    }
+
     public void registerMeetingSchedule() {
         Meeting meeting = null;
 
         while (true) {
             System.out.println("Entering meeting information.");
             String description = Validation.getValue("Meeting description: ");
-            LocalDate meetingDate = Validation.getDate("Meeting date: ");
-            LocalTime startTime = Validation.getTime("Start time: ");
-            LocalTime endTime = Validation.getTime("End time: ");
+            LocalDate meetingDate = Validation.getDate(0, null, "Meeting date: ");
+            LocalTime startTime = Validation.getTime(0, null, "Start time: ");
+            LocalTime endTime = Validation.getTime(1, startTime, "End time: ");
             String location = Validation.getValue("Location: ");
             String staffId = null;
             while (true) {
@@ -89,7 +105,7 @@ public class MeetingService {
 
         while (true) {
             System.out.println("Entering detail for meeting.");
-            String staffId = Validation.getAndValidateStaffId("Enter participant ID: ");
+            String staffId = Validation.getAndValidateStaffId(1, "Enter participant ID: ");
             String reason = Validation.getValue("Reason: ");
             meetingDetails.add(new MeetingDetail(IDGenerator.generate("MD", meetingDetails.size()), meeting.getId(),
                     staffId, reason));
@@ -107,7 +123,8 @@ public class MeetingService {
         if (containsMeeting(meetingId)) {
             System.out.println("Detail for meeting " + meetingId);
             meetingDetails.stream()
-                    .filter(detail -> detail.getMeetingId().equals(meetingId)) // Filter meeting details match meetingId that inputted
+                    .filter(detail -> detail.getMeetingId().equals(meetingId)) // Filter meeting details match meetingId
+                                                                               // that inputted
                     .forEach(System.out::println);
         } else {
             System.out.println("Meeting does not exists!");

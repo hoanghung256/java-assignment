@@ -6,6 +6,9 @@ import models.Staff;
 import repository.StaffRepository;
 import utils.Validation;
 
+/**
+ * @author hoang hung
+ */
 public class StaffService {
     private static StaffService instance;
     private static ArrayList<Staff> staffs;
@@ -80,6 +83,10 @@ public class StaffService {
                 }
                 case 2 -> {
                     String departmentId = Validation.getValue("Enter department ID: ");
+                    if (DepartmentService.getInstance().findById(departmentId) == null) {
+                        System.out.println("Department not exists!");
+                        continue;
+                    }
                     staff.setDepartmentId(departmentId);
                 }
                 case 3 -> {
@@ -95,11 +102,5 @@ public class StaffService {
                 break;
             }
         }
-    }
-
-    public static void main(String[] args) {
-        StaffService.getInstance().viewAllStaff();
-        StaffService.getInstance().editInformation(staffs.get(1));
-        StaffService.getInstance().viewAllStaff();
     }
 }

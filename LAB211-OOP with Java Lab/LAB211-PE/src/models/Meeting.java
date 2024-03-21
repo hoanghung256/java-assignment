@@ -42,4 +42,8 @@ public class Meeting extends Register {
     public String toString() {
         return "Meeting{" + super.toString() + "id=" + id + ", locationId=" + locationId + '}';
     }
+
+    public String toFileString() {
+        return this.id + ";" + this.getRegisterId() + ";" + this.getRegisterDate() + ";" + this.getDescription() + ";" + this.getStartDate() + ";" + this.getEndDate() + ";" + this.getStartTime() + ";" + this.getEndTime() + this.locationId;
+    }
 }

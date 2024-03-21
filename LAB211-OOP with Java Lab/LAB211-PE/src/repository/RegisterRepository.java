@@ -2,7 +2,9 @@ package repository;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.TreeSet;
@@ -13,10 +15,14 @@ import models.Study;
 import models.Vacation;
 import models.Work;
 
+/**
+ * @author hoang hung
+ */
 public class RegisterRepository {
     private static RegisterRepository instance;
     private final String srcPath = new File("src").getAbsolutePath();
     private final String registerPath = "\\data\\registers.txt";
+
     /**
      * TreeSet using for keep the order by date of registers
      */
@@ -153,6 +159,21 @@ public class RegisterRepository {
         } else if (register instanceof Study) {
             Study study = (Study) register;
             studies.add(study);
+        }
+    }
+
+    public void save() {
+        try {
+            PrintWriter writer = new PrintWriter(srcPath + registerPath);
+
+            meetings.forEach(meeting -> writer.println(meeting.toFileString()));
+            works.forEach(work -> writer.println(work.toFileString()));
+            vacations.forEach(vacation -> writer.print(vacation.toFileString()));
+            studies.forEach(study -> writer.println(study.toFileString()));
+
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

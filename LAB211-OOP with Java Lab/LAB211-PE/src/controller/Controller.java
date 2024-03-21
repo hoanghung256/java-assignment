@@ -1,132 +1,90 @@
 package controller;
 
-import models.*;
-import services.*;
-import utils.Validation;
+import models.Staff;
+import models.User;
+import services.StaffService;
 import view.Menu;
 
 /**
- *
+ * The main controller of application
+ * 
  * @author hoang hung
  */
-public class Controller extends Menu<String> {
-    private static final String MENU_TITLE = "MENU";
-    private static final String[] STAFF_MENU_OPTIONS = {
-            "Register a schedule",
-            "View schedules",
-            "View all notifications",
-            "Staff management", "Log out" };
-    private Menu<String> registerController;
-    private Menu<String> scheduleController;
-    private Menu<String> staffController;
+public class Controller {
+    private static Controller instance;
+    private Staff currentStaff;
 
-    public Controller() {
-        super(MENU_TITLE, STAFF_MENU_OPTIONS);
+    private Controller() {
     }
 
-    @Override
-    public void execute(int ch) {
-        switch (ch) {
-            case 1 -> this.runRegisterManagementMenu();
-            case 2 -> this.runScheduleManagementMenu();
-            case 3 -> NotificationService.getInstance().viewAllNoti();
-            case 4 -> this.runStaffManagementMenu();
-            case 5 -> {
-                System.out.println("Goodbye!");
-                System.exit(0);
-            }
+    public static Controller getInstance() {
+        if (instance == null) {
+            instance = new Controller();
         }
+        return instance;
     }
 
-    private void runRegisterManagementMenu() {
-        String title = "REGISTER MANAGEMENT";
-        String[] options = {
-                "Register meeting schedule",
-                "Register work schedule",
-                "Register vacation schedule",
-                "Register study schedule",
-                "Return main menu" };
+    public void setLoginStaff(User loginUser) {
+        this.currentStaff = StaffService.getInstance().findById(loginUser.getStaffId());
+    }
 
-        registerController = new Menu<String>(title, options) {
+    public Staff getLoginStaff() {
+        return currentStaff;
+    }
+
+    public void runMenuForManager() {
+        String title = "MANAGER MENU";
+        String[] options = {
+                "Register a schedule",
+                "View schedule",
+                "Notifications management",
+                "Staff management",
+                "Log out" };
+
+        Menu<String> managerMenu = new Menu<String>(title, options) {
             @Override
             public void execute(int choice) {
                 switch (choice) {
-                    case 1 -> MeetingService.getInstance().registerMeetingSchedule();
-                    case 2 -> WorkService.getInstance().registerWorkSchedule();
-                    case 3 -> VacationService.getInstance().registerVacationSchedule();
-                    case 4 -> StudyService.getInstance().registerStudySchedule();
+                    case 1 -> RegisterScheduleController.getInstance().run();
+                    case 2 -> ViewScheduleController.getInstance().runViewScheduleMenuForManager();
+                    case 3 -> NotificationController.getInstance().runNotificationMenuForManager();
+                    case 4 -> StaffManagementController.getInstance().run();
                     case 5 -> {
-                        // new Thread(() -> {
-                        // // Save data here
-                        // }).start();
-                        return;
+                        System.out.println("Goodbye!");
+                        System.exit(0);
                     }
                 }
             }
         };
 
-        registerController.run();
+        managerMenu.run();
     }
 
-    private void runScheduleManagementMenu() {
-        String title = "SCHEDULE MANAGEMENT";
+    public void runMenuForStaff() {
+        String title = "STAFF MENU";
         String[] options = {
-                "View all meeting schedule",
-                "View all work schedule",
-                "View all vacation schedule",
-                "View all study schedule",
-                "Return main menu" };
+                "Register a schedule",
+                "View schedule",
+                "Notifications management",
+                "Edit your information",
+                "Log out" };
 
-        scheduleController = new Menu<String>(title, options) {
+        Menu<String> staffMenu = new Menu<String>(title, options) {
             @Override
             public void execute(int choice) {
                 switch (choice) {
-                    case 1 -> MeetingService.getInstance().viewAllMeetingSchedule();
-                    case 2 -> WorkService.getInstance().viewAllWorkSchedule();
-                    case 3 -> VacationService.getInstance().viewAllVacationSchedule();
-                    case 4 -> StudyService.getInstance().viewAllStudySchedule();
+                    case 1 -> RegisterScheduleController.getInstance().run();
+                    case 2 -> ViewScheduleController.getInstance().runViewScheduleMenuForStaff();
+                    case 3 -> NotificationController.getInstance().runNotificationMenuForStaff();
+                    case 4 -> StaffService.getInstance().editInformation(currentStaff);
                     case 5 -> {
-                        return;
+                        System.out.println("Goodbye!");
+                        System.exit(0);
                     }
                 }
             }
         };
 
-        scheduleController.run();
-    }
-
-    private void runStaffManagementMenu() {
-        String title = "STAFF MANAGEMENT";
-        String[] options = {
-                "View all staff",
-                "Add new staff",
-                "Delete a staff",
-                "Update staff information",
-                "Return main menu" };
-        StaffService staffService = StaffService.getInstance();
-
-        staffController = new Menu<String>(title, options) {
-            @Override
-            public void execute(int choice) {
-                switch (choice) {
-                    case 1 -> staffService.viewAllStaff();
-                    case 2 -> staffService.addStaff();
-                    case 3 -> staffService.deleteStaff();
-                    case 4 -> {
-                        String staffId = Validation.getAndValidateStaffId(1, "Enter staff ID: ");
-                        Staff staff = staffService.findById(staffId);
-                        staffService.editInformation(staff);
-                    }
-                    case 5 -> {
-                        // new Thread(() -> {
-                        // // Save data here
-                        // }).start();
-                        return;
-                    }
-                }
-            }
-        };
-
-        staffController.run();
+        staffMenu.run();
     }
 }

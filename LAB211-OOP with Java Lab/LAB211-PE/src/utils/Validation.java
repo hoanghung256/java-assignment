@@ -7,6 +7,9 @@ import java.util.Scanner;
 
 import services.StaffService;
 
+/**
+ * @author hoang hung
+ */
 public class Validation {
     public static String getValue(String msg) {
         Scanner sc = new Scanner(System.in);
