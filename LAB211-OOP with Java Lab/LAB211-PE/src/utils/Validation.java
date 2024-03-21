@@ -61,15 +61,31 @@ public class Validation {
         }
     }
 
-    public static String getAndValidateStaffId(String msg) {
+
+    /**
+     * @param command 1 is for get exists ID and 0 is for not exists
+     * @return staff ID after validate
+     */
+    public static String getAndValidateStaffId(int command, String msg) {
         String id = null;
-        while (true) {
-            id = getValue(msg);
-            if (StaffService.getInstance().findById(id) == null) {
-                System.out.println("Staff not exists!");
-                continue;
+        if (command == 1) {
+            while (true) {
+                id = getValue(msg);
+                if (StaffService.getInstance().findById(id) == null) {
+                    System.out.println("Staff not exists!");
+                    continue;
+                }
+                break;
             }
-            break;
+        } else if (command == 0) {
+            while (true) {
+                id = getValue(msg);
+                if (StaffService.getInstance().findById(id) != null) {
+                    System.out.println("Staff ID exists!");
+                    continue;
+                }
+                break;
+            }
         }
         return id;
     }
