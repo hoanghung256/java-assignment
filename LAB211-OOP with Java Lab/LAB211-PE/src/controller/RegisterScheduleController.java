@@ -36,7 +36,9 @@ public class RegisterScheduleController extends Menu<String> {
             case 3 -> VacationService.getInstance().viewAllVacationSchedule();
             case 4 -> StudyService.getInstance().viewAllStudySchedule();
             case 5 -> {
-                RegisterRepository.getInstance().save();
+                new Thread(() -> {
+                    RegisterRepository.getInstance().save();
+                }).start();
                 return;
             }
         }

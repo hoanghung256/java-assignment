@@ -46,7 +46,9 @@ public class StaffManagementController extends Menu<String> {
             }
             case 4 -> staffService.editInformation(Controller.getInstance().getLoginStaff());
             case 5 -> {
-                StaffRepository.getInstance().save();
+                new Thread(() -> {
+                    StaffRepository.getInstance().save();
+                }).start();
                 return;
             }
         }

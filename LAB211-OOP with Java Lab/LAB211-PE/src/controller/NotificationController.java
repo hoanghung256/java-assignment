@@ -1,5 +1,6 @@
 package controller;
 
+import repository.NotificationRepository;
 import services.NotificationService;
 import view.Menu;
 
@@ -40,6 +41,9 @@ public class NotificationController {
                     case 3 -> notiService.viewAllReceivedNoti();
                     case 4 -> notiService.sendNoti();
                     case 5 -> {
+                        new Thread(() -> {
+                            NotificationRepository.getInstance().save();
+                        }).start();
                         return;
                     }
                 }
